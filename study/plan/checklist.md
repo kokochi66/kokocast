@@ -8,3 +8,6 @@
 - [ ] 테스트 모듈 작성
 - [ ] 포트폴리오 제작
 - [ ] 개발 시연 영상 촬영
+
+## 학습 참고링크
+- [트위치 클론 사이트 만들기 강의](https://www.udemy.com/course/creating-a-streaming-platform-practical-mern-stack-course/)
