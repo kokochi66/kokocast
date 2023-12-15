@@ -1,4 +1,5 @@
 import User from "../../models/User.js"
+import Channel from "../../models/Channel.js"
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
@@ -16,10 +17,14 @@ export const postRegister = async (req, res) => {
 
         // 비밀번호를 암호화한다. - bcrypt를 사용
         const encryptedPassword = await bcrypt.hash(password, 10)
+
+        const newChannel = await Channel.create({})
+
         const user = await User.create({
             username: username,
             email: email.toLowerCase(),
-            password: encryptedPassword
+            password: encryptedPassword,
+            channel: newChannel._id,
         })
 
         // JWT 토큰을 만든다.
