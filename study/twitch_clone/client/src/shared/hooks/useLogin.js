@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login as loginRequest } from '../../api'
+import toast from 'react-hot-toast'
 
 export const useLogin = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -13,16 +14,15 @@ export const useLogin = () => {
             password
         })
 
-        console.log('res = ', response)
-
         setIsLoading(false)
 
         if (response.error) {
-            return console.log(response.error)
+            return toast.error(response.exception?.response?.data 
+                || 'Error occured while loggin in. Please try again')
         }
 
         const { userDetails } = response.data
-        localStorage.setItem('user', userDetails)
+        localStorage.setItem('user', JSON.stringify(userDetails))
 
         navigate('/')
     }

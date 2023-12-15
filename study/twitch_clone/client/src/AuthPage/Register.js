@@ -2,8 +2,11 @@ import React, { useState } from "react"
 import { Logo } from "./Logo"
 import { AuthInput } from "./AutInput"
 import { emailValidationMessage, passwordConfValidationMessage, passwordValidationMessage, usernameValidationMessage, validateEmail, validatePassword, validatePasswordConf, validateUsername } from "../shared/validators"
+import { useRegister } from "../shared/hooks"
 
 export const Register = ({ switchAuthHandler }) => {
+    const { isLoading, register } = useRegister()
+
     const [formState, setFormState] = useState({
         email: {
             value: '',
@@ -66,6 +69,20 @@ export const Register = ({ switchAuthHandler }) => {
         }))
     }
 
+    const handleRegister = (event) => {
+        event.preventDefault()
+
+        register(formState.email.value, formState.password.value, formState.username.value)
+
+    }
+
+    const isSubmitButtonDisabled = !formState.password.isValid
+        || !formState.passwordConf.isValid
+        || !formState.username.isValid
+        || !formState.email.isValid
+        || formState.password.value !== formState.passwordConf.value
+        || isLoading
+
     return <div className="register-container">
         <Logo text={"Sign in to Clone"} />
         <form className="auth-form">
@@ -109,12 +126,9 @@ export const Register = ({ switchAuthHandler }) => {
                 showErrorMessage={formState.passwordConf.showError}
                 validationMessage={passwordConfValidationMessage}
             />
-            <button disabled={!formState.password.isValid 
-                || !formState.passwordConf.isValid
-                || !formState.username.isValid
-                || !formState.email.isValid
-                || formState.password.value !== formState.passwordConf.value
-                }>Register</button>
+            <button
+                onClick={handleRegister}
+                disabled={isSubmitButtonDisabled}>Register</button>
         </form>
         <span onClick={switchAuthHandler} className="auth-form-switch-label">
             Already have an account ? Sign in
