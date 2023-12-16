@@ -1,3 +1,5 @@
 export { postLogin } from './auth/postLogin.js'
 export { postRegister } from './auth/postRegister.js'
-
+export { getChannels } from './channel/getChannels.js'
+export { getChannelDetails } from './channel/getChannelDetails.js'
+export { getChannelSettings } from './settings/getChannelSettings.js'

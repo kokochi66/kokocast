@@ -5,6 +5,8 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 
 import authRoutes from './src/routes/authRoutes.js'
+import channelRoutes from './src/routes/channelRoutes.js'
+import settingsRoutes from './src/routes/settingsRoutes.js'
 
 dotenv.config();
 
@@ -35,3 +37,6 @@ app.get('/', (req, res) => {
 
 // 인증 처리를 위한 라우팅을 사용처리한다.
 app.use('/api/auth', authRoutes)
+app.use('/api/channels', channelRoutes)
+app.use('/api/settings', settingsRoutes)
+
