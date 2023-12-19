@@ -1,7 +1,8 @@
 import express from 'express'
 import Joi from 'joi'
 import ExpressValidation from 'express-joi-validation'
-import { getChannelDetails, getChannels } from '../controller/controllers.js'
+import { getChannelDetails, getChannels, postFollowChannel, getFollowedChannels } from '../controller/controllers.js'
+import { verifyToken } from '../middleware/auth.js'
 
 const router = express.Router()
 
@@ -11,6 +12,19 @@ const channelDetailsSchema = Joi.object({
 })
 
 const validator = ExpressValidation.createValidator({})
+
+router.get(
+    '/followed',
+    verifyToken,
+    getFollowedChannels
+)
+
+router.post(
+    '/follow',
+    verifyToken,
+    validator.body(channelDetailsSchema),
+    postFollowChannel
+)
 
 router.get(
     '/:channelId',
