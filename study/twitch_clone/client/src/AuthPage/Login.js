@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Logo } from "./Logo"
-import { AuthInput } from "./AutInput"
+import { Input } from "../shared/components/Input"
 import { emailValidationMessage, passwordValidationMessage, validateEmail, validatePassword } from "../shared/validators"
 import { useLogin } from "../shared/hooks/useLogin"
 
@@ -64,7 +64,7 @@ export const Login = ({ switchAuthHandler }) => {
     return <div className="login-container">
         <Logo text={"Log in to Clone"} />
         <form className="auth-form">
-            <AuthInput
+            <Input
                 field="email"
                 label="Email"
                 type='text'
@@ -74,7 +74,7 @@ export const Login = ({ switchAuthHandler }) => {
                 showErrorMessage={formState.email.showError}
                 validationMessage={emailValidationMessage}
             />
-            <AuthInput
+            <Input
                 field="password"
                 label="Password"
                 type='password'

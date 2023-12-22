@@ -1,0 +1,1 @@
+export { ChannelDescription } from './ChannelDescription'

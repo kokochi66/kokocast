@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Logo } from "./Logo"
-import { AuthInput } from "./AutInput"
+import { Input } from "../shared/components/Input"
 import { emailValidationMessage, passwordConfValidationMessage, passwordValidationMessage, usernameValidationMessage, validateEmail, validatePassword, validatePasswordConf, validateUsername } from "../shared/validators"
 import { useRegister } from "../shared/hooks"
 
@@ -86,7 +86,7 @@ export const Register = ({ switchAuthHandler }) => {
     return <div className="register-container">
         <Logo text={"Sign in to Clone"} />
         <form className="auth-form">
-            <AuthInput
+            <Input
                 field="email"
                 label="Email"
                 type='text'
@@ -96,7 +96,7 @@ export const Register = ({ switchAuthHandler }) => {
                 showErrorMessage={formState.email.showError}
                 validationMessage={emailValidationMessage}
             />
-            <AuthInput
+            <Input
                 field="username"
                 label="Username"
                 type='text'
@@ -106,7 +106,7 @@ export const Register = ({ switchAuthHandler }) => {
                 showErrorMessage={formState.username.showError}
                 validationMessage={usernameValidationMessage}
             />
-            <AuthInput
+            <Input
                 field="password"
                 label="Password"
                 type='password'
@@ -116,7 +116,7 @@ export const Register = ({ switchAuthHandler }) => {
                 showErrorMessage={formState.password.showError}
                 validationMessage={passwordValidationMessage}
             />
-            <AuthInput
+            <Input
                 field="passwordConf"
                 label="Password Confirmation"
                 type='password'
