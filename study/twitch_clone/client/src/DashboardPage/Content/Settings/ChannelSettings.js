@@ -30,25 +30,25 @@ const inputs = [
     },
 ]
 
-export const ChannelSettings = ({ settings }) => {
+export const ChannelSettings = ({ settings, saveSettings }) => {
     const [formState, setFormState] = useState({
         title: {
-            isValid: false,
+            isValid: validateTitle(settings.title),
             showError: false,
             value: settings.title,
         },
         username: {
-            isValid: false,
+            isValid: validateUsername(settings.username),
             showError: false,
             value: settings.username,
         },
         avatarUrl: {
-            isValid: false,
+            isValid: validateAvatarUrl(settings.avatarUrl),
             showError: false,
             value: settings.avatarUrl,
         },
         description: {
-            isValid: false,
+            isValid: validateDescription(settings.description),
             showError: false,
             value: settings.description,
         },
@@ -96,6 +96,13 @@ export const ChannelSettings = ({ settings }) => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
+
+        saveSettings({
+            username: formState.username.value,
+            title: formState.title.value,
+            description: formState.description.value,
+            avatarUrl: formState.avatarUrl.value,
+        })
     }
 
     const isSubmitButtonDisabled = !formState.username.isValid
@@ -120,7 +127,7 @@ export const ChannelSettings = ({ settings }) => {
                 />
             ))}
             <button onClick={handleFormSubmit} disabled={isSubmitButtonDisabled} >
-                save changes
+                Save Changes
             </button>
         </form>
     )

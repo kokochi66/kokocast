@@ -1,29 +1,16 @@
 import React from 'react'
 
-const follwedChannels = [
-    {
-        id: 1,
-        username: 'Leechunhyang',
-        isOnline: false
-    },
-    {
-        id: 2,
-        username: 'Bbonge',
-        isOnline: true
-    },
-    {
-        id: 3,
-        username: 'gambler',
-        isOnline: false
-    }
-]
+export const Sidebar = ({ channels }) => {
 
-export const Sidebar = () => {
+    if (!channels) {
+        return null;
+    }
+    
     return (
         <div className='sidebar-container'>
             <span className='sidebar-title'>For you</span>
             <span className='sidebar-subtitle'>FOLLWED CHANNELS</span>
-            {follwedChannels.map(channel => {
+            {channels.map(channel => {
                 return (
                     <div key={channel.id} className='sidebar-list-item'>
                         <span className='sidebar-list-username'>{channel.username}</span>

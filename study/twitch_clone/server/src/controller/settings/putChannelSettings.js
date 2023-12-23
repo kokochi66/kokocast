@@ -7,8 +7,6 @@ export const putChannelSettings = async (req, res) => {
 
         const { title, description, username, avatarUrl } = req.body
 
-        console.log('avatarUrl = ', avatarUrl)
-
         const userData = await User.findById(userId, {channel: 1, username: 1})
 
         if (userData.username !== username) {

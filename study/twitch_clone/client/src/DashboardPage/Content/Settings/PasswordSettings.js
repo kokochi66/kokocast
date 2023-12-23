@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { passwordValidationMessage, validatePassword } from '../../../shared/validators';
 import { Input } from '../../../shared/components/Input';
+import { useChangePassword } from '../../../shared/hooks';
 
 const inputs = [
     {
@@ -31,6 +32,8 @@ export const PasswordSettings = () => {
         },
     })
 
+    const { changePassword } = useChangePassword()
+
     const handleInputValueChange = (value, field) => {
         setFormState(prevState => ({
             ...prevState,
@@ -59,6 +62,8 @@ export const PasswordSettings = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
+
+        changePassword(formState.password.value, formState.newPassword.value)
     }
     return (
         <form className='settings-form'>
