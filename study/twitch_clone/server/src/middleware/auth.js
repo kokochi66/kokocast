@@ -4,12 +4,9 @@ const config = process.env
 
 export const verifyToken = (req, res, next) => {
     let token = req.body.token || req.query.token || req.headers['authorization']
-
     if (!token) {
         return res.status(401).send('A token is required for authentication')
     }
-
-    const tokenFromUser = 'Bearer oqweoqweqoweqweqwe'
 
     try {
         token = token.replace(/^Bearer\s+/, "")
@@ -17,6 +14,7 @@ export const verifyToken = (req, res, next) => {
 
         req.user = decoded
     } catch (err) {
+        console.log(err)
         return res.status(410).send("Invalid Token")
     }
 

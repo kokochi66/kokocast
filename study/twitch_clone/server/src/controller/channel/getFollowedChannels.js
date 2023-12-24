@@ -6,7 +6,7 @@ export const getFollowedChannels = async (req, res) => {
         const { userId } = req.user
 
         const userData = await User.findById(userId, { followedChannels: 1 })
-
+        
         return res.status(200).json({
             followedChannels: userData.followedChannels
         })

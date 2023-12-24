@@ -7,8 +7,6 @@ export const postFollowChannel = async (req, res) => {
         const { userId } = req.user
         const { channelId } = req.body
 
-        console.log(userId)
-
         const userData = await User.findById(userId, { followedChannels: 1})
 
 

@@ -16,7 +16,6 @@ const channelSettings = {
 export const Settings = () => {
     const { channelSettings, isFetching, saveSettings } = useChannelSettings()
     
-    console.log(channelSettings)
     if (isFetching) {
         return <LoadingSpinner />
     }

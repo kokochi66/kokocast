@@ -7,7 +7,6 @@ export const AuthPage = () => {
 
     const [isLogin, setIsLogin] = useState(true)
     const handleAuthPageToggle = () => {
-        console.log(isLogin)
         setIsLogin(prev => !prev)
     }
 
