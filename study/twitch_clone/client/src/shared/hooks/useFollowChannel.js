@@ -3,7 +3,6 @@ import { followChannel as followChannelRequest } from "../../api"
 
 export const useFollowChannel = () => {
     const followChannel = async (channelId, onSuccess) => {
-        console.log(channelId)
         const responseData = await followChannelRequest(channelId)
 
         if (responseData.error) {

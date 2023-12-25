@@ -5,6 +5,7 @@ import { Content } from './Content'
 import './dashboardPage.css'
 import { useChannels, useUserDetails } from '../shared/hooks'
 import { LoadingSpinner } from '../shared/components'
+import { connectWithSocketServer } from '../socketConn'
 
 export const DashboardPage = () => {
     const { getChannels, isFetching, allChannels, followedChannels } = useChannels()
@@ -13,6 +14,7 @@ export const DashboardPage = () => {
     
     useEffect(() => {
         getChannels(isLogged)
+        connectWithSocketServer()
     }, [])
 
     if (isFetching) {

@@ -12,7 +12,7 @@ const channelSchema = new Schema({
     description: { type: String, default: defaultDescription },
     avatarUrl: { type:String, default: 'none' },
     streamKey: { type: String, default: uuid}, // RTMP 서버와 연결할 스트림 키
-    message: {
+    messages: {
         type: [{ type: Schema.Types.ObjectId, ref: "Message"}],
         default: [],
     }

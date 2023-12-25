@@ -7,6 +7,7 @@ export const verifyToken = (req, res, next) => {
     if (!token) {
         return res.status(401).send('A token is required for authentication')
     }
+    
 
     try {
         token = token.replace(/^Bearer\s+/, "")
