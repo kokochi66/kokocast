@@ -3,7 +3,7 @@
 .env
 
 **/application-secret.yml
-/out/
+**/out/
 
 /target/
 !.mvn/wrapper/maven-wrapper.jar
