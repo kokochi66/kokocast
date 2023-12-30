@@ -2,8 +2,8 @@
 **/node_modules/
 .env
 
-application-secret.yml
-
+**/application-secret.yml
+/out/
 
 /target/
 !.mvn/wrapper/maven-wrapper.jar
