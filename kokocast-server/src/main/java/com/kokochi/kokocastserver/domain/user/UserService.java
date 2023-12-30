@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -29,6 +30,10 @@ public class UserService {
 
     public User getYourEntity(String id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public List<User> getUserList() {
+        return userRepository.findAll();
     }
 
     public void delete(String id) {

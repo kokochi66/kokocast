@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/test/user")
 public class UserTestController {
@@ -16,12 +18,11 @@ public class UserTestController {
     private UserService userService;
 
 
-    @GetMapping("/add")
+    @GetMapping("/register")
     public Boolean saveUser(
-            @RequestParam("id") String id,
             @RequestParam("nickname") String nickname
     ) {
-        userService.saveUser(new User(id, nickname));
+        userService.register(nickname);
         return true;
     }
 
@@ -31,5 +32,10 @@ public class UserTestController {
     ) {
         userService.delete(id);
         return true;
+    }
+
+    @GetMapping("/list")
+    public List<User> userList() {
+        return userService.getUserList();
     }
 }
