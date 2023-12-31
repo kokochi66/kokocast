@@ -19,19 +19,19 @@ public class UserTestController {
 
 
     @GetMapping("/register")
-    public Boolean saveUser(
+    public List<User> saveUser(
             @RequestParam("nickname") String nickname
     ) {
         userService.register(nickname);
-        return true;
+        return userList();
     }
 
     @GetMapping("/delete")
-    public Boolean delete(
+    public List<User> delete(
             @RequestParam("id") String id
     ) {
         userService.delete(id);
-        return true;
+        return userList();
     }
 
     @GetMapping("/list")
