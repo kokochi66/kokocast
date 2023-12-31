@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import UserList from './component/test/user/UserList';
+import UserList from './test/UserList';
 
 export const App = () => {
   return (
