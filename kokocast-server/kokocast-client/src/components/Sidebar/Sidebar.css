@@ -1,0 +1,18 @@
+#sidebar {
+    padding-top: 10px;
+    background-color: #1D1D1B;
+    width: 240px;
+    height: 100vh;
+}
+
+#sidebar-title {
+    color: #fff;
+    padding-top: 5px;
+    font-size: 1.4rem;
+    padding-bottom: 5px;
+}
+
+
+.channel-title {
+    color: #A5A4AC;
+}

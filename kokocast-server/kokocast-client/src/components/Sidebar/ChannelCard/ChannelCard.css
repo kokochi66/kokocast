@@ -1,0 +1,71 @@
+.channel-card {
+    width: 100% !important;
+    margin-bottom: 3px;
+    justify-content: space-between !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-box-pack: justify;
+}
+
+.profile-pic {
+    width: 34px;
+    height: 34px;
+    background-color: #000;
+    margin-top: 2px;
+    overflow: hidden;
+    padding: 1px;
+    border: 2px solid #DB8B3A;
+}
+
+.profile-pic img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.channel-info {
+    flex-grow: 1;
+    overflow: hidden;
+    margin-left: 5px;
+    margin-right: 15px;
+}
+
+.broadcaster-name {
+    color: #A5A4AC;
+    font-size: 15px;
+    width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.game-playing {
+    color: #8B8C91;
+    font-size: 10px;
+    width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.viewer-count {
+    padding-top: 6px;
+    position: relative;
+    color: #F38605;
+    flex-shrink: 0;
+}
+
+.viewer-count .live-indicator::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    left: -15px; /* 위치 조정 */
+    top: 50%;
+    transform: translateY(-50%);
+}
