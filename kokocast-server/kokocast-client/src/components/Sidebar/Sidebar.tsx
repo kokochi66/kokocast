@@ -1,6 +1,7 @@
 import React from 'react';
 import ChannelCard from './ChannelCard'; // 이후에 만들 컴포넌트입니다
 import './Sidebar.css';
+import MoreButton from "./MoreButton/MoreButton";
 
 const Sidebar: React.FC = () => {
     // 채널 정보를 갖는 리스트
@@ -41,12 +42,23 @@ const Sidebar: React.FC = () => {
             viewerCount: 1497,
             profileImageUrl: "https://static-cdn.jtvnw.net/jtv_user_pictures/c5c416f5-9e95-4d72-b1dc-54d15e8b1657-profile_image-70x70.png"
         },
+        {
+            broadcasterName: "아라하시 타비",
+            gamePlaying: "Just Chatting",
+            viewerCount: 5219,
+            profileImageUrl: "https://static-cdn.jtvnw.net/jtv_user_pictures/047ffc9d-fd35-4b1a-856a-0020f4a93f69-profile_image-70x70.png"
+        },
     ];
+
+    const handleLoadMore: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+        // 여기에 더보기 버튼 클릭 시의 로직
+        console.log('더보기')
+    };
 
 
     return (
-        <div id="sidebar" className="sidebar col-md-3 d-flex flex-column">
-            <h2 id="sidebar-title" className="text-center mb-3">Kokocast</h2>
+        <div id="sidebar">
+            <h2 id="sidebar-title" className="text-center">Kokocast</h2>
             <div className="followed-channels">
                 <h5 className="mb-2 channel-title">팔로우 채널</h5> {/* 섹션 제목 */}
                 {channelList.map((channel, index) => (
@@ -58,6 +70,24 @@ const Sidebar: React.FC = () => {
                         profileImageUrl={channel.profileImageUrl}
                     />
                 ))}
+                <div className="d-flex justify-content-center">
+                    <MoreButton onClick={handleLoadMore}/>
+                </div>
+            </div>
+            <div className="followed-channels">
+                <h5 className="mb-2 channel-title">추천 채널</h5> {/* 섹션 제목 */}
+                {channelList.map((channel, index) => (
+                    <ChannelCard
+                        key={index}
+                        broadcasterName={channel.broadcasterName}
+                        gamePlaying={channel.gamePlaying}
+                        viewerCount={channel.viewerCount}
+                        profileImageUrl={channel.profileImageUrl}
+                    />
+                ))}
+                <div className="d-flex justify-content-center">
+                    <MoreButton onClick={handleLoadMore}/>
+                </div>
             </div>
         </div>
     );

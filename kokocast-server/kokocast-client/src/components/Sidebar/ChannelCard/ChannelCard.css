@@ -6,6 +6,12 @@
     white-space: nowrap;
     overflow: hidden;
     -webkit-box-pack: justify;
+    padding: 5px calc(var(--bs-gutter-x) * .5);
+}
+
+.channel-card:hover {
+    background-color: #343434;
+    cursor: pointer;
 }
 
 .profile-pic {
@@ -35,7 +41,7 @@
 .broadcaster-name {
     color: #A5A4AC;
     font-size: 15px;
-    width: 130px;
+    width: 120px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -44,7 +50,7 @@
 .game-playing {
     color: #8B8C91;
     font-size: 10px;
-    width: 130px;
+    width: 120px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

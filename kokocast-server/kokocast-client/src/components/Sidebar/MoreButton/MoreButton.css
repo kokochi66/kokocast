@@ -1,0 +1,11 @@
+.more-button .btn {
+    border-color: #F9B571;
+    background-color: #2F2E2E;
+    color: #F38605;
+}
+
+.more-button .btn:hover {
+    border-color: #F9B571;
+    background-color: #1D1D1B;
+    color: #F38605;
+}

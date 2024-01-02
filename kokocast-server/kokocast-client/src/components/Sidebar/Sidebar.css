@@ -1,9 +1,18 @@
+/* sidebar 컨테이너에 적용되는 기본 스타일 */
 #sidebar {
     padding-top: 10px;
     background-color: #1D1D1B;
     width: 240px;
     height: 100vh;
+    padding-left: 0;
+    padding-right: 0;
+    overflow: auto;
 }
+
+#sidebar::-webkit-scrollbar {
+    display: none;
+}
+
 
 #sidebar-title {
     color: #fff;
@@ -15,4 +24,10 @@
 
 .channel-title {
     color: #A5A4AC;
+    padding-left: calc(var(--bs-gutter-x) * .5);
+}
+
+.followed-channels {
+    margin-top: 10px;
+    margin-bottom: 20px;
 }

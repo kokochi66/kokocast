@@ -20,7 +20,7 @@ const ChannelCard: React.FC<ChannelCardProps> = (
     const formattedViewerCount = viewerCount.toLocaleString("en-US");
 
     return (
-        <div className="channel-card d-flex mb-3">
+        <div className="channel-card d-flex">
             {/* 부트스트랩 클래스를 사용하여 스타일링 */}
             <div className="profile-pic rounded-circle">
                 <img src={profileImageUrl} alt="Profile" className="h-100 w-100"/>
