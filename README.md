@@ -38,3 +38,4 @@
 - [2023/12/29 :: 프로젝트 기획](./study/plan/231229.md)
 - [2023/12/30 :: 스프링 부트 서버 구현](./study/plan/231230.md)
 - [2024/01/01 :: BootStrap 연동 및 Sidebar 디자인](./study/plan/240101.md)
+- [2024/01/02 :: BootStrap 연동 및 Sidebar 디자인](./study/plan/240102.md)
