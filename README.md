@@ -39,3 +39,4 @@
 - [2023/12/30 :: 스프링 부트 서버 구현](./study/plan/231230.md)
 - [2024/01/01 :: BootStrap 연동 및 Sidebar 디자인](./study/plan/240101.md)
 - [2024/01/02 :: BootStrap 연동 및 Sidebar 디자인](./study/plan/240102.md)
+- [2024/01/03 :: 상단 헤더, 실시간 시청자 수 1위 컴포넌트 개발 (1)](./study/plan/240103.md)
