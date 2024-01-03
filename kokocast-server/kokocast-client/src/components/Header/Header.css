@@ -1,0 +1,115 @@
+#header {
+    height: 60px;
+    background-color: #1D1D1B;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding-left: 300px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between; /* 양 끝에 요소 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    height: 100%;
+    padding: 0 20px; /* 양쪽 패딩 */
+}
+
+.search-container {
+    flex-grow: 1; /* 가능한 많은 공간 차지 */
+    display: flex;
+    justify-content: center; /* 검색창 가운데 정렬 */
+}
+
+.search-input-container {
+    position: relative;
+}
+
+.search-input {
+    width: 350px;
+    height: 40px;
+    border: 1px solid #E1DFDF;
+    background-color: #2F2E2E;
+    color: #E1DFDF;
+    border-radius: 15px;
+    padding-right: 40px; /* 돋보기 아이콘을 위한 공간 */
+    padding-left: 8px;
+}
+
+.search-input:focus {
+    border: 1px solid #DB8B3A !important;
+    outline: transparent;
+}
+
+.search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    color: #E1DFDF;
+    cursor: pointer;
+}
+
+.search-preview {
+    position: absolute;
+    top: calc(100% + 10px); /* 검색창 바로 아래에 위치 */
+    left: 0;
+    width: 100%; /* 또는 필요한 너비 */
+    background-color: #1D1D1B;
+    color: #E1DFDF;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    z-index: 100;
+    box-sizing: border-box;
+    padding: 3px;
+}
+
+.search-preview-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* 각 항목 사이의 구분선 */
+    /* 필요한 추가 스타일 */
+}
+
+.search-preview-item:last-child {
+    border-bottom: none; /* 마지막 항목의 구분선 제거 */
+}
+
+.profile-container {
+    position: relative;
+}
+
+.profile-image {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #DB8B3A;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.profile-container:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f8f8f8;
+}

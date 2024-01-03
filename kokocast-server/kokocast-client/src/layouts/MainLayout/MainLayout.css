@@ -1,0 +1,12 @@
+#main-layout {
+    background-color: #1D1D1B;
+    /*overflow: hidden;*/
+}
+
+#content {
+    width: 100%;
+    padding-left: 240px;
+    padding-top: 60px;
+    box-sizing: border-box;
+    min-height: 100vh;
+}
