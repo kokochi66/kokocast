@@ -6,7 +6,7 @@ const LiveStreamRanking: React.FC = () => {
         <div className="best-streaming-container">
             <div className="video-container">
                 {/* 임시 이미지. 나중에 동영상으로 대체 */}
-                <img src="https://livecloud-thumb.akamaized.net/chzzk/livecloud/KR/stream/26441748/live/4161643/record/24231362/thumbnail/image_480.jpg" alt="Live Stream" className="stream-video" />
+                <img src="https://livecloud-thumb.akamaized.net/chzzk/livecloud/KR/stream/26494320/live/4163356/record/24242826/thumbnail/image_1080.jpg" alt="Live Stream" className="stream-video" />
             </div>
             <div className="stream-info">
                 <div className="top-info">
@@ -14,13 +14,14 @@ const LiveStreamRanking: React.FC = () => {
                     <p>1,202명이 시청중</p>
                 </div>
                 <div className="streamer-info">
-                    <img src="https://nng-phinf.pstatic.net/MjAyMzEyMTlfMTk0/MDAxNzAyOTU5NTUzNzYx.HI2Ow6d8GfIKBBaGMNYXrd09WSvkNyQS6Ayaikxsdlsg.WS5q6-wqM6V5GhVFSC_VYhM3Z4myzOSObNzn0GHMKZcg.PNG/%EA%B0%90%EB%B8%94%EB%9F%AC%EB%8B%98_%EB%82%B4%EB%A7%9E%EB%B0%B8.png?type=f120_120_na" alt="Streamer Profile" className="streamer-profile" />
+                    <img src="https://nng-phinf.pstatic.net/MjAyMzEyMjJfMjg0/MDAxNzAzMjQyNTE3MDk5.CuBTzC4M3BeLP9NYEY-p1rYTxW3qfyhTL_zNHI6qaUYg.ohdthdl_5mMiiLo29KGJ_rimQSVm1DNO8Z2dhuhtyugg.PNG/4CBB95E5-2793-46B3-A7D1-F2DD167452CA.png?type=f120_120_na" alt="Streamer Profile" className="streamer-profile" />
                     <div className="streamer-details">
-                        <h3>감블러</h3>
-                        <p>로스트아크 플레이 중</p>
+                        <h3>이춘향</h3>
+                        <p>발로란트 플레이 중</p>
                     </div>
                 </div>
             </div>
+            <div className="stream-info-bg"></div>
         </div>
     );
 };

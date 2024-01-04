@@ -67,14 +67,36 @@
     padding: 3px;
 }
 
+.search-preview-header {
+    height: 30px; /* 높이를 다른 항목보다 낮게 설정 */
+    line-height: 30px; /* 세로 중앙 정렬을 위한 설정 */
+    text-align: left;
+    padding-left: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
 .search-preview-item {
     padding: 10px;
     border-bottom: 1px solid #ddd; /* 각 항목 사이의 구분선 */
-    /* 필요한 추가 스타일 */
+    position: relative;
+    cursor: pointer;
+}
+
+.search-preview-item::after {
+    content: '✖'; /* x 문자 */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .search-preview-item:last-child {
     border-bottom: none; /* 마지막 항목의 구분선 제거 */
+}
+
+.search-preview-item:hover {
+    background-color: #302d2d;
 }
 
 .profile-container {

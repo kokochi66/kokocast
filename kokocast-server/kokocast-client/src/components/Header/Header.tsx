@@ -34,6 +34,7 @@ const Header: React.FC = () => {
                         <button className="search-btn">🔍</button>
                         {isSearchActive && (
                             <div className="search-preview">
+                                <div className="search-preview-header">최신검색어</div>
                                 {searchPreviewItems.map((item, index) => (
                                     <div key={index} className="search-preview-item">
                                         {item}

@@ -7,6 +7,8 @@
     border: 1px solid #F9B571;
     border-radius: 15px;
     overflow: hidden;
+    z-index: 0;
+    cursor: pointer;
 }
 
 .video-container {
@@ -16,6 +18,7 @@
     right: 0;
     top: 0;
     bottom: 0;
+    z-index: 0;
 }
 
 .stream-video {
@@ -34,12 +37,13 @@
     color: white;
     padding: 20px;
     box-sizing: border-box;
+    z-index: 200;
 }
 
 .top-info {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 30px;
+    left: 30px;
 }
 
 .streamer-info {
@@ -48,15 +52,38 @@
     left: 10px;
     display: flex;
     align-items: center;
+
 }
 
 .streamer-profile {
-    width: 50px;
-    height: 50px;
+    width: 85px;
+    height: 85px;
     border-radius: 50%;
     margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 3px solid #DB8B3A;
 }
 
 .streamer-details {
     /* 스트리머 상세 정보 스타일 */
+}
+
+.stream-info-bg {
+    position: absolute;
+    top: 0;
+    right: calc(100px);
+    bottom: 0;
+    width: 880px; /* 초기 가로 길이 */
+    background: linear-gradient(to right, #1D1D1B 0%, transparent 100%);
+    z-index: 100;
+}
+
+@media (max-width: 1280px) {
+    .stream-info-bg {
+        right: auto; /* 기존 right 속성 제거 */
+        left: 0; /* left를 0으로 설정 */
+        width: 880px;
+    }
 }
