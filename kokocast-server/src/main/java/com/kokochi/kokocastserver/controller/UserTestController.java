@@ -1,7 +1,7 @@
 package com.kokochi.kokocastserver.controller;
 
 import com.kokochi.kokocastserver.domain.user.User;
-import com.kokochi.kokocastserver.domain.user.UserService;
+import com.kokochi.kokocastserver.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,7 @@ public class UserTestController {
     public List<User> saveUser(
             @RequestParam("nickname") String nickname
     ) {
-        userService.register(nickname);
+        userService.register(nickname, "1");
         return userList();
     }
 
