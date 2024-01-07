@@ -6,6 +6,7 @@ import java.util.Map;
 public enum ErrorCode {
     ALREADY_EXISTS_NICKNAME("USER-00001", "이미 사용중인 닉네임 입니다."),
     NOT_EXISTS_USER("USER-00002", "없는 사용자 입니다."),
+    NOT_EQUAL_PASSWORD("USER_00003", "잘못된 비밀번호 입니다."),
     ;
     // ... 기타 에러코드
 

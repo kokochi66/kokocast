@@ -1,6 +1,7 @@
-package com.kokochi.kokocastserver.controller;
+package com.kokochi.kokocastserver.controller.user;
 
 import com.kokochi.kokocastserver.domain.user.User;
+import com.kokochi.kokocastserver.domain.user.UserRepository;
 import com.kokochi.kokocastserver.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ public class UserTestController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
 
     @GetMapping("/register")
@@ -30,7 +33,7 @@ public class UserTestController {
     public List<User> delete(
             @RequestParam("id") String id
     ) {
-        userService.delete(id);
+        userRepository.deleteById(id);
         return userList();
     }
 

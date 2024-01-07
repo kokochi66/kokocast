@@ -1,17 +1,27 @@
 package com.kokochi.kokocastserver.config;
 
+import com.kokochi.kokocastserver.filter.auth.UserAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private UserAuthenticationFilter userAuthenticationFilter;
+
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -19,15 +29,25 @@ public class SecurityConfig {
         csrfRequestHandler.setCsrfRequestAttributeName("_csrf");
 
         http
-                .cors(Customizer.withDefaults())
+                .cors(cors -> cors
+                        .configurationSource(request -> {
+                            CorsConfiguration configuration = new CorsConfiguration();
+                            configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+                            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "HEAD"));
+                            return configuration;
+                        }))
                 .csrf(csrf -> csrf
                         .csrfTokenRequestHandler(csrfRequestHandler)
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .ignoringRequestMatchers("/user/**", "/test/**"))
+                .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers("test/**").permitAll()
+                                .requestMatchers("user/**", "test/**").permitAll()
                                 .anyRequest().authenticated());
         return http.build();
     }
+
+
 }
 
