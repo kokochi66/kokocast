@@ -58,7 +58,7 @@ public class UserService {
         User user = User.builder()
                 .userId(userId)
                 .nickname(nickname)
-                .password(passwordEncoder.encode(password))
+                .password(passwordEncode(password))
                 .followUserIds(Collections.emptyList())
                 .regDate(now)
                 .build();
@@ -81,6 +81,12 @@ public class UserService {
         String token = userTokenService.generateToken(user); // 인증 토큰 생성
         return Pair.of(user, token);
     }
+
+    public String passwordEncode(String password) {
+        return passwordEncode(password);
+    }
+
+
 
     public void upsertUser(User user) {
         user.setModDate(LocalDateTime.now());

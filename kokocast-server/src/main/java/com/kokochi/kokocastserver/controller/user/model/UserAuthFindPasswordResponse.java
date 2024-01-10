@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAuthResponse {
+public class UserAuthFindPasswordResponse {
     private String nickname;
-    private LocalDateTime regDate;
-
+    private String changePasswordEncoded;
 }

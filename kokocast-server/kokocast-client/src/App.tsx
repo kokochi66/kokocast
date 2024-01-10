@@ -2,6 +2,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserList from './test/UserList';
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/AuthPage/LoginPage";
+import RegisterPage from "./pages/AuthPage/RegisterPage";
+import ChangePasswordPage from "./pages/AuthPage/ChangePasswordPage";
+import FindPasswordPage from "./pages/AuthPage/FindPasswordPage";
 
 export const App = () => {
   return (
@@ -9,8 +12,12 @@ export const App = () => {
           <Routes>
               <Route path="/userlist" element={<UserList />} />
               <Route path="/main" element={<MainPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              {/* 다른 라우트들 */}
+
+
+              <Route path="/auth/login" element={<LoginPage />} />
+              <Route path="/auth/register" element={<RegisterPage />} />
+              <Route path="/auth/find-password" element={<FindPasswordPage />} />
+              <Route path="/auth/change-password" element={<ChangePasswordPage />} />
           </Routes>
       </Router>
   );

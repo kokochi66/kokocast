@@ -135,3 +135,13 @@
 .dropdown-menu a:hover {
     background-color: #f8f8f8;
 }
+
+#header .header-login-btn {
+    border-color: #F9B571;
+    background-color: #2F2E2E;
+    color: #F38605;
+}
+
+#header .header-login-btn:hover {
+    background-color: #1D1D1B;
+}

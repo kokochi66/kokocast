@@ -2,8 +2,11 @@ import React from 'react';
 import ChannelCard from './ChannelCard'; // 이후에 만들 컴포넌트입니다
 import './Sidebar.css';
 import MoreButton from "./MoreButton/MoreButton";
+import {useAuth} from "../../context/Auth/AuthContext";
 
 const Sidebar: React.FC = () => {
+    const { isLoggedIn } = useAuth();
+
     // 채널 정보를 갖는 리스트
     const channelList = [
         {
@@ -58,7 +61,9 @@ const Sidebar: React.FC = () => {
 
     return (
         <div id="sidebar">
-            <h2 id="sidebar-title" className="text-center">Kokocast</h2>
+            <h2 id="sidebar-title" className="text-center" onClick={() => {
+                window.location.href = '/main';
+            }}>Kokocast</h2>
             <div className="followed-channels">
                 <h5 className="mb-2 channel-title">팔로우 채널</h5> {/* 섹션 제목 */}
                 {channelList.map((channel, index) => (
