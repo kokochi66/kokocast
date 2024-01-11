@@ -5,6 +5,8 @@ import com.kokochi.kokocastserver.controller.user.model.UserAuthFindPasswordResp
 import com.kokochi.kokocastserver.controller.user.model.UserAuthRequest;
 import com.kokochi.kokocastserver.controller.user.model.UserAuthResponse;
 import com.kokochi.kokocastserver.domain.user.User;
+import com.kokochi.kokocastserver.exception.ErrorCode;
+import com.kokochi.kokocastserver.exception.KokoException;
 import com.kokochi.kokocastserver.service.user.UserService;
 import com.kokochi.kokocastserver.service.user.UserTokenService;
 import io.jsonwebtoken.Claims;
@@ -65,6 +67,12 @@ public class UserAuthController {
         log.debug("/user/change-password");
         Claims claims = userTokenService.decodeChangePasswordToken(request.getChangePasswordEncoded());
         User user = userService.getUserById(claims.getSubject());
+
+        if (userService.passwordMatch(user, request.getPassword())) {
+            // 변경하려는 비밀번호랑 기존 비밀번호가 겹치면 오류
+            throw new KokoException(ErrorCode.ALREADY_USED_PASSWORD);
+        }
+
         user.setPassword(userService.passwordEncode(request.getPassword()));
         userService.upsertUser(user);
         return ResponseEntity
@@ -77,15 +85,12 @@ public class UserAuthController {
     ) {
         User user = pair.getFirst();
         String token = pair.getSecond();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + token);
         return ResponseEntity
                 .status(200)
-                .headers(headers)
                 .body(UserAuthResponse.builder()
                         .nickname(user.getNickname())
                         .regDate(user.getRegDate())
+                        .jwtAuthLoginToken(token)
                         .build());
     }
 }

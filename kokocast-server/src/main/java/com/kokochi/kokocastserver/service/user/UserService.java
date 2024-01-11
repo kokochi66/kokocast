@@ -74,7 +74,7 @@ public class UserService {
      */
     public Pair<User, String> login(String nickname, String password) {
         User user = getUserByNickname(nickname);
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordMatch(user, password)) {
             throw new KokoException(ErrorCode.NOT_EQUAL_PASSWORD)
                     .addParams("userId", user.getUserId());
         }
@@ -83,10 +83,12 @@ public class UserService {
     }
 
     public String passwordEncode(String password) {
-        return passwordEncode(password);
+        return passwordEncoder.encode(password);
     }
 
-
+    public Boolean passwordMatch(User user, String password) {
+        return passwordEncoder.matches(password, user.getPassword());
+    }
 
     public void upsertUser(User user) {
         user.setModDate(LocalDateTime.now());

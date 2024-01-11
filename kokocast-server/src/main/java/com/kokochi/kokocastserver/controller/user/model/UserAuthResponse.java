@@ -12,5 +12,6 @@ import java.time.LocalDateTime;
 public class UserAuthResponse {
     private String nickname;
     private LocalDateTime regDate;
+    private String jwtAuthLoginToken;
 
 }

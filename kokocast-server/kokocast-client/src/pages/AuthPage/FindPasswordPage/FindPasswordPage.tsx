@@ -14,9 +14,13 @@ const FindPasswordPage = () => {
         }).then(res => {
             // 비밀번호 찾기 요청 처리
             console.log('res = ', res);
+            window.location.href = `/auth/change-password?changePasswordKey=${res.data.changePasswordEncoded}`
         }).catch(error => {
             // 오류 처리
             console.log('err = ', error);
+            if (error.response.data) {
+                alert(error.response.data.message);
+            }
         });
     };
 

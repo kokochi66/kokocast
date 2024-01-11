@@ -31,7 +31,7 @@ public class UserTokenService {
         return Jwts.builder()
                 .setSubject(user.getUserId()) // 사용자 ID나 다른 식별자를 Subject로 설정
                 .setIssuedAt(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()))
-                .setExpiration(Date.from(now.plusHours(2).atZone(ZoneId.systemDefault()).toInstant()))
+                .setExpiration(Date.from(now.plusHours(48).atZone(ZoneId.systemDefault()).toInstant()))
                 .signWith(new SecretKeySpec(loginUserCookieJwtKey.getBytes(), 0, loginUserCookieJwtKey.length(), "HmacSHA512"))
                 .compact();
     }
@@ -60,7 +60,7 @@ public class UserTokenService {
         return Jwts.builder()
                 .setSubject(user.getUserId()) // 사용자 ID나 다른 식별자를 Subject로 설정
                 .setIssuedAt(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()))
-                .setExpiration(Date.from(now.plusHours(2).atZone(ZoneId.systemDefault()).toInstant()))
+                .setExpiration(Date.from(now.plusMinutes(5).atZone(ZoneId.systemDefault()).toInstant()))
                 .signWith(new SecretKeySpec(changePasswordJwtKey.getBytes(), 0, changePasswordJwtKey.length(), "HmacSHA512"))
                 .compact();
     }
