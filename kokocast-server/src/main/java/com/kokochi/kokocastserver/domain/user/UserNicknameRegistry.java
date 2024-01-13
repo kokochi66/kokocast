@@ -18,5 +18,6 @@ public class UserNicknameRegistry {
     @Id
     private String nickname;
     private String userId;
+    private LocalDateTime modDate;
     private LocalDateTime regDate;
 }

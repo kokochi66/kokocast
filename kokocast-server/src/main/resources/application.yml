@@ -6,7 +6,6 @@ server:
 
 logging:
   level:
-    root: DEBUG
     org:
-      springframework: DEBUG
-      hibernate: DEBUG
+      springframework: INFO
+      hibernate: INFO

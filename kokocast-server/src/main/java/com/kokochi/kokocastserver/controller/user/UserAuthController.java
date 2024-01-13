@@ -31,7 +31,7 @@ public class UserAuthController {
     public ResponseEntity<UserAuthResponse> login(
             @RequestBody UserAuthRequest request
     ) {
-        log.debug("/user/login");
+        log.info("/user/login");
         return generateAuthResponse(userService.login(request.getNickname(), request.getPassword()));
     }
 
@@ -39,7 +39,7 @@ public class UserAuthController {
     public ResponseEntity<UserAuthResponse> register(
             @RequestBody UserAuthRequest request
     ) {
-        log.debug("/user/register");
+        log.info("/user/register");
         return generateAuthResponse(userService.register(request.getNickname(), request.getPassword()));
     }
 
@@ -47,7 +47,7 @@ public class UserAuthController {
     public ResponseEntity<UserAuthFindPasswordResponse> findPassword(
             @RequestBody UserAuthRequest request
     ) {
-        log.debug("/user/find-password");
+        log.info("/user/find-password");
         // request의 nickname이 존재하는지 확인
         User user = userService.getUserByNickname(request.getNickname());
         String token = userTokenService.generateChangePasswordToken(user);
@@ -64,7 +64,7 @@ public class UserAuthController {
             @RequestBody UserAuthChangePasswordRequest request
     ) {
         // request의 nickname이 존재하는지만 확인해줌.
-        log.debug("/user/change-password");
+        log.info("/user/change-password");
         Claims claims = userTokenService.decodeChangePasswordToken(request.getChangePasswordEncoded());
         User user = userService.getUserById(claims.getSubject());
 

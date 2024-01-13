@@ -8,6 +8,12 @@ public enum ErrorCode {
     NOT_EXISTS_USER("USER-00002", "없는 사용자 입니다."),
     NOT_EQUAL_PASSWORD("USER_00003", "잘못된 비밀번호 입니다."),
     ALREADY_USED_PASSWORD("USER_00004", "기존 비밀번호와 동일한 비밀번호 입니다."),
+    NICKNAME_UPDATE_RESTRICTED("USER_00005", "닉네임은 마지막 변경일자로부터 3개월 후에 변경이 가능합니다."),
+
+
+    ALREADY_EXISTS_CHANNEL("CHANNEL_00001", "이미 채널이 존재합니다."),
+
+    ALREADY_EXISTS_CATEGORY("GAME_CATEGORY_00001", "동일한 카테고리가 이미 존재합니다."),
     ;
     // ... 기타 에러코드
 

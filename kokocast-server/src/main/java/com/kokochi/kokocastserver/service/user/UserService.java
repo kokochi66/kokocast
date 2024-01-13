@@ -9,6 +9,7 @@ import com.kokochi.kokocastserver.exception.KokoException;
 import com.mongodb.MongoWriteException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.util.Pair;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +51,7 @@ public class UserService {
             mongoTemplate.insert(UserNicknameRegistry.builder()
                     .nickname(nickname)
                     .userId(userId)
+                    .modDate(now)
                     .regDate(now)
                     .build(), "kkc_user_nickname_registry");
         } catch (DuplicateKeyException e) {
@@ -81,6 +84,59 @@ public class UserService {
         String token = userTokenService.generateToken(user); // 인증 토큰 생성
         return Pair.of(user, token);
     }
+
+
+    /**
+     * 닉네임 변경
+     * @param user 사용자
+     * @param changeNickname 변경하려는 닉네임
+     * @return 변경된 닉네임 유저를 반환합니다.
+     */
+    @Transactional
+    public void changeUserNickname(User user, String changeNickname) {
+        LocalDateTime now = LocalDateTime.now();
+
+        try {
+            mongoTemplate.insert(UserNicknameRegistry.builder()
+                    .nickname(changeNickname)
+                    .userId(user.getUserId())
+                    .modDate(now)
+                    .regDate(now)
+                    .build(), "kkc_user_nickname_registry");
+        } catch (DuplicateKeyException e) {
+            throw new KokoException(ErrorCode.ALREADY_EXISTS_NICKNAME)
+                    .addParams("nickname", user.getNickname());
+        }
+
+        userNicknameRegistryRepository.deleteById(user.getNickname());
+        user.setNickname(changeNickname);
+        upsertUser(user);
+    }
+
+    /**
+     * 닉네임 변경 validation 체크
+     * @param user 사용자
+     * @return 변경된 닉네임 유저를 반환합니다.
+     */
+    public void validateChangeNickname(User user) {
+        LocalDateTime now = LocalDateTime.now();
+        Optional<UserNicknameRegistry> optionalUserNicknameRegistry = userNicknameRegistryRepository.findById(user.getNickname());
+        if (optionalUserNicknameRegistry.isEmpty()) {
+            throw new KokoException(ErrorCode.NOT_EXISTS_USER)
+                    .addParams("nickname", user.getNickname());
+        }
+        UserNicknameRegistry userNicknameRegistry = optionalUserNicknameRegistry.get();
+
+        // 닉네임 변경한 지 3개월 이상 지났어야 변경이 가능합니다.
+
+        LocalDateTime expiredDate = userNicknameRegistry.getModDate().plusMonths(3);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (now.isBefore(expiredDate)) {
+            throw new KokoException(ErrorCode.NICKNAME_UPDATE_RESTRICTED)
+                    .addParams("expired", expiredDate.format(formatter));
+        }
+    }
+
 
     public String passwordEncode(String password) {
         return passwordEncoder.encode(password);
