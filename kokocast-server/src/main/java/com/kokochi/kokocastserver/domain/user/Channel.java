@@ -11,9 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Channel {
-    private String channelStreamKey;
-    private String channelTitle;
-    private String channelDescription;
-    private List<GameCategory> channelGameCategory;
-    private GameCategory channelPlayGame;
+    private String channelStreamKey;                    // 스트림 키
+    private String streamingTitle;                      // 방송 제목
+    private List<String> streamingCategory;             // 방송 카테고리
+
+    private GameCategory playingGameCategory;           // 플레이 중인 게임
+    private String channelDescription;                  // 채널 소개
 }

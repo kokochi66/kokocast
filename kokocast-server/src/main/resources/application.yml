@@ -9,3 +9,8 @@ logging:
     org:
       springframework: INFO
       hibernate: INFO
+
+
+kokocast:
+  properties:
+    real-time-server-url: http://localhost:8002

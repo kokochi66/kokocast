@@ -14,6 +14,7 @@ public enum ErrorCode {
     ALREADY_EXISTS_CHANNEL("CHANNEL_00001", "이미 채널이 존재합니다."),
 
     ALREADY_EXISTS_CATEGORY("GAME_CATEGORY_00001", "동일한 카테고리가 이미 존재합니다."),
+    ONLY_ENGLISH_CATEGORY_NAME("GAME_CATEGORY_00002", "카테고리 명은 영어만 사용이 가능합니다."),
     ;
     // ... 기타 에러코드
 

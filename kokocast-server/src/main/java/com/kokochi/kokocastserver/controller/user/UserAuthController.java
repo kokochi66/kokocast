@@ -80,6 +80,8 @@ public class UserAuthController {
                 .body(true);
     }
 
+
+
     private ResponseEntity<UserAuthResponse> generateAuthResponse(
             Pair<User, String> pair
     ) {

@@ -157,13 +157,15 @@ public class UserService {
                         .addParams("userId", userId));
     }
 
-    public User getUserByNickname(String nickname) {
-        UserNicknameRegistry userNickname = userNicknameRegistryRepository.findById(nickname)
+    public UserNicknameRegistry getUserNicknameRegistry(String nickname) {
+        return userNicknameRegistryRepository.findById(nickname)
                 .orElseThrow(() -> new KokoException(ErrorCode.NOT_EXISTS_USER)
                         .addParams("nickname", nickname));
-        return userRepository.findById(userNickname.getUserId())
-                .orElseThrow(() -> new KokoException(ErrorCode.NOT_EXISTS_USER)
-                        .addParams("userId", userNickname.getUserId()));
+    }
+
+    public User getUserByNickname(String nickname) {
+        UserNicknameRegistry userNickname = getUserNicknameRegistry(nickname);
+        return getUserById(userNickname.getUserId());
     }
 
     public List<User> getUserList() {

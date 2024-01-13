@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.core.query.TextQuery;
@@ -31,6 +32,13 @@ public class GameCategoryService {
     }
 
     public GameCategory insertGameCategory(String categoryName) {
+        // 영문자만 확인하는 정규 표현식
+        String regex = "^[A-Za-z]+$";
+        if (!categoryName.matches(regex)) {
+            throw new KokoException(ErrorCode.ONLY_ENGLISH_CATEGORY_NAME)
+                    .addParams("categoryName", categoryName);
+        }
+
         if (getGameCategory(categoryName).isPresent()) {
             throw new KokoException(ErrorCode.ALREADY_EXISTS_CATEGORY)
                     .addParams("categoryName", categoryName);
@@ -43,8 +51,9 @@ public class GameCategoryService {
     }
 
     public List<GameCategory> searchByCategoryName(String searchTerm, Pageable pageable) {
-        TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(searchTerm);
-        Query query = TextQuery.queryText(criteria).with(pageable);
+//        TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(searchTerm);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("categoryName").regex("^" + searchTerm));
         return mongoTemplate.find(query, GameCategory.class);
     }
 }
