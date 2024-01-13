@@ -4,7 +4,7 @@ import AuthInput from "../../../components/Auth/AuthInput";
 import AuthButton from "../../../components/Auth/AuthButton";
 import AuthLink from "../../../components/Auth/AuthLink";
 import axios from "axios";
-import api from "../../../context/Api";
+import { api } from "../../../context/Api";
 import {useAuth} from "../../../context/Auth/AuthContext";
 import {getToken} from "../../../context/Auth"; // 추가적인 스타일을 위한 CSS 파일
 

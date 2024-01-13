@@ -5,7 +5,8 @@ import AuthButton from "../../../components/Auth/AuthButton";
 import AuthLink from "../../../components/Auth/AuthLink";
 import {useAuth} from "../../../context/Auth/AuthContext";
 import {getToken, saveToken} from "../../../context/Auth";
-import api from "../../../context/Api"; // 추가적인 스타일을 위한 CSS 파일
+import { api } from "../../../context/Api"
+import axios from "axios";
 
 const LoginPage = () => {
     const [nickname, setNickname] = useState("");
@@ -21,9 +22,10 @@ const LoginPage = () => {
             login(res.data.jwtAuthLoginToken)
         }).catch(error => {
             // 오류 처리
-            if (error.response.data) {
-                alert(error.response.data.message);
-            }
+            console.log(error);
+            // if (error.response.data) {
+            //     alert(error.response.data.message);
+            // }
         });
     };
 

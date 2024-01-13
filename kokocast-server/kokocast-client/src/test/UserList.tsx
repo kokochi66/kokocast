@@ -1,6 +1,7 @@
 // @ts-ignore
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
+import {api} from "../context/Api";
 
 
 interface User {
@@ -13,7 +14,7 @@ function UserList() {
     const [nickname, setNickname] = useState("");
 
     useEffect(() => {
-        axios.get('/test/user/list')
+        api.get('/test/user/list')
             .then(res => {
                 setUsers(res.data)
             });
@@ -21,7 +22,7 @@ function UserList() {
 
     const handleRegister = (event: React.FormEvent) => {
         event.preventDefault();
-        axios.get('/test/user/register', {
+        api.get('/test/user/register', {
             params: {
                 nickname: nickname
             }
@@ -31,7 +32,7 @@ function UserList() {
     };
 
     const handleDelete = (userId: number) => {
-        axios.get('/test/user/delete', {
+        api.get('/test/user/delete', {
             params: {
                 id: userId
             }

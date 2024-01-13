@@ -3,3 +3,10 @@ spring:
     include: secret
 server:
   port: 8080
+
+logging:
+  level:
+    root: DEBUG
+    org:
+      springframework: DEBUG
+      hibernate: DEBUG

@@ -4,12 +4,13 @@ import AuthLayout from "../../../layouts/AuthLayout";
 import AuthInput from "../../../components/Auth/AuthInput";
 import AuthButton from "../../../components/Auth/AuthButton";
 import AuthLink from "../../../components/Auth/AuthLink";
+import {api} from "../../../context/Api";
 
 const FindPasswordPage = () => {
     const [nickname, setNickname] = useState("");
 
     const handleFindPassword = () => {
-        axios.post('/user/find-password', {
+        api.post('/user/find-password', {
             nickname
         }).then(res => {
             // 비밀번호 찾기 요청 처리

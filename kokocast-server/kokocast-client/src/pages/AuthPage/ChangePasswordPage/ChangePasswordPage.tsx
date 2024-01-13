@@ -4,6 +4,7 @@ import AuthLayout from "../../../layouts/AuthLayout";
 import AuthInput from "../../../components/Auth/AuthInput";
 import AuthButton from "../../../components/Auth/AuthButton";
 import {useLocation} from "react-router-dom";
+import {api} from "../../../context/Api";
 
 const ChangePasswordPage = () => {
     const [password, setPassword] = useState("");
@@ -15,7 +16,7 @@ const ChangePasswordPage = () => {
 
     const handlePasswordChange = () => {
         // 여기서 요청 URL을 설정합니다.
-        axios.post('/user/change-password', {
+        api.post('/user/change-password', {
             password,
             changePasswordEncoded
         }).then(res => {
