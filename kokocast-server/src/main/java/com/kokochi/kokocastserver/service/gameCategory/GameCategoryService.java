@@ -1,6 +1,8 @@
 package com.kokochi.kokocastserver.service.gameCategory;
 
 import com.kokochi.kokocastserver.domain.gameCategory.GameCategory;
+import com.kokochi.kokocastserver.domain.gameCategory.GameCategoryElastic;
+import com.kokochi.kokocastserver.domain.gameCategory.GameCategoryElasticRepository;
 import com.kokochi.kokocastserver.domain.gameCategory.GameCategoryRepository;
 import com.kokochi.kokocastserver.exception.ErrorCode;
 import com.kokochi.kokocastserver.exception.KokoException;
@@ -13,6 +15,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.core.query.TextQuery;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,12 +28,14 @@ import java.util.UUID;
 public class GameCategoryService {
 
     private final GameCategoryRepository gameCategoryRepository;
+    private final GameCategoryElasticRepository gameCategoryElasticRepository;
     private final MongoTemplate mongoTemplate;
 
     public Optional<GameCategory> getGameCategory(String categoryName) {
         return gameCategoryRepository.findById(categoryName);
     }
 
+    @Transactional
     public GameCategory insertGameCategory(String categoryName) {
         // 영문자만 확인하는 정규 표현식
         String regex = "^[A-Za-z]+$";
@@ -43,11 +48,16 @@ public class GameCategoryService {
             throw new KokoException(ErrorCode.ALREADY_EXISTS_CATEGORY)
                     .addParams("categoryName", categoryName);
         }
-        return gameCategoryRepository.save(GameCategory.builder()
-                        .categoryId(UUID.randomUUID().toString())
-                        .categoryName(categoryName)
-                        .regDate(LocalDateTime.now())
+        GameCategory gameCategory = gameCategoryRepository.save(GameCategory.builder()
+                .categoryId(UUID.randomUUID().toString())
+                .categoryName(categoryName)
+                .regDate(LocalDateTime.now())
                 .build());
+        gameCategoryElasticRepository.save(GameCategoryElastic.builder()
+                        .id(UUID.randomUUID().toString())
+                        .categoryName(categoryName)
+                .build());
+        return gameCategory;
     }
 
     public List<GameCategory> searchByCategoryName(String searchTerm, Pageable pageable) {
