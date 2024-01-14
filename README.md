@@ -48,3 +48,4 @@
 - [2024/01/10 :: 로그인 페이지 클라이언드단 구현](./study/plan/markdown/2401/240110.md)
 - [2024/01/11 :: 로그인 / 회원가입 / 비밀번호 찾기 서버 연동](./study/plan/markdown/2401/240111.md)
 - [2024/01/13 :: 인증오류 수정](./study/plan/markdown/2401/240113.md)
+- [2024/01/14 :: 검색을 위한 ElasticSearch 설정 완료, User Nickname 연동](./study/plan/markdown/2401/240114.md)

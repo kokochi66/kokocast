@@ -1,9 +1,6 @@
 package com.kokochi.kokocastserver.service.user;
 
-import com.kokochi.kokocastserver.domain.user.User;
-import com.kokochi.kokocastserver.domain.user.UserNicknameRegistry;
-import com.kokochi.kokocastserver.domain.user.UserNicknameRegistryRepository;
-import com.kokochi.kokocastserver.domain.user.UserRepository;
+import com.kokochi.kokocastserver.domain.user.*;
 import com.kokochi.kokocastserver.exception.ErrorCode;
 import com.kokochi.kokocastserver.exception.KokoException;
 import com.mongodb.MongoWriteException;
@@ -31,6 +28,7 @@ public class UserService {
     private final MongoTemplate mongoTemplate;
     private final UserRepository userRepository;
     private final UserNicknameRegistryRepository userNicknameRegistryRepository;
+    private final UserNicknameElasticService userNicknameElasticService;
     private final UserTokenService userTokenService;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -66,6 +64,13 @@ public class UserService {
                 .regDate(now)
                 .build();
         upsertUser(user);
+
+        String elasticId = UUID.randomUUID().toString();
+        userNicknameElasticService.saveUserNickname(UserNicknameElastic.builder()
+                        .id(elasticId)
+                        .nickname(nickname)
+                        .userId(userId)
+                .build());
         return Pair.of(user, userTokenService.generateToken(user));
     }
 

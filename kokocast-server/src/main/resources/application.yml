@@ -7,8 +7,11 @@ server:
 logging:
   level:
     org:
-      springframework: INFO
-      hibernate: INFO
+      springframework:
+        data:
+          elasticsearch:
+            client: DEBUG
+      hibernate: DEBUG
 
 
 kokocast:
