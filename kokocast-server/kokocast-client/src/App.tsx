@@ -5,6 +5,7 @@ import LoginPage from "./pages/AuthPage/LoginPage";
 import RegisterPage from "./pages/AuthPage/RegisterPage";
 import ChangePasswordPage from "./pages/AuthPage/ChangePasswordPage";
 import FindPasswordPage from "./pages/AuthPage/FindPasswordPage";
+import ChannelSettingPage from "./pages/ChannelSettingPage/ChannelSettingPage";
 
 export const App = () => {
   return (
@@ -18,6 +19,9 @@ export const App = () => {
               <Route path="/auth/register" element={<RegisterPage />} />
               <Route path="/auth/find-password" element={<FindPasswordPage />} />
               <Route path="/auth/change-password" element={<ChangePasswordPage />} />
+
+
+              <Route path="/setting/channel" element={<ChannelSettingPage />} />
           </Routes>
       </Router>
   );

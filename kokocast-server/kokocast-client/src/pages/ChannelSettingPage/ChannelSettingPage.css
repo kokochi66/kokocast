@@ -1,0 +1,80 @@
+/* 기본 레이아웃 및 공통 스타일 */
+#channel-setting-container .container {
+    color: #fff;
+}
+
+/* 제목 */
+#channel-setting-container .title {
+    font-size: 64px;
+    color: #fff;
+}
+
+/* 공통 Input 스타일 */
+#channel-setting-container .input-field {
+    background-color: #2F2E2E;
+    color: #E6E6E6;
+    border: 1px solid #954B01;
+    border-radius: 5px;
+}
+
+/* 공통 버튼 스타일 */
+#channel-setting-container .button {
+    background-color: #2F2E2E;
+    color: #F38605;
+    border: 1px solid #F9B571;
+    border-radius: 5px;
+}
+
+#channel-setting-container .button:hover {
+    background-color: #1D1D1B;
+}
+
+/* 닉네임 입력 영역 */
+#channel-setting-container .nickname-section {
+    display: flex;
+    flex-direction: row;
+}
+
+#channel-setting-container .nickname-input {
+    flex-grow: 2; /* 인풋 영역을 크게 */
+}
+
+/* 프로필 업로드 영역 */
+#channel-setting-container .profile-upload-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#channel-setting-container .profile-image {
+    border: 2px solid #954B01;
+    background-color: #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+
+/* 자기소개, 방송 제목, 게임 찾기, 카테고리 입력 영역 */
+#channel-setting-container .large-input {
+    height: 100px; /* 더 큰 입력 필드 */
+}
+
+/* 스트림 키 복사 영역 */
+#channel-setting-container .stream-key-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#channel-setting-container .stream-key-input {
+    flex-grow: 1;
+}
+
+/* 카테고리 태그 스타일 */
+#channel-setting-container .category-tag {
+    background-color: #1A1A1A;
+    color: #DB8B3A;
+    border: 1px solid #F9B571;
+    border-radius: 5px;
+    margin-right: 5px;
+}
