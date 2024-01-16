@@ -1,12 +1,15 @@
 /* 기본 레이아웃 및 공통 스타일 */
-#channel-setting-container .container {
+#channel-setting-container.container {
     color: #fff;
+    padding: 40px 80px;
+    box-sizing: border-box;
 }
 
 /* 제목 */
 #channel-setting-container .title {
     font-size: 64px;
     color: #fff;
+    margin-bottom: 50px;
 }
 
 /* 공통 Input 스타일 */
@@ -15,6 +18,9 @@
     color: #E6E6E6;
     border: 1px solid #954B01;
     border-radius: 5px;
+    padding: 8px;
+    margin-right: 20px;
+    hegiht: 100%;
 }
 
 /* 공통 버튼 스타일 */
@@ -23,19 +29,27 @@
     color: #F38605;
     border: 1px solid #F9B571;
     border-radius: 5px;
+    height: 100%;
+    padding: 10px;
 }
 
 #channel-setting-container .button:hover {
-    background-color: #1D1D1B;
+    background-color: #313131;
 }
 
-/* 닉네임 입력 영역 */
-#channel-setting-container .nickname-section {
+#channel-setting-container .button:active {
+    background-color: #534a4a;
+}
+
+#channel-setting-container .input-section {
     display: flex;
     flex-direction: row;
+    height: 45px;
+    margin-top: 60px;
+    margin-bottom: 10px;
 }
 
-#channel-setting-container .nickname-input {
+#channel-setting-container .input-field {
     flex-grow: 2; /* 인풋 영역을 크게 */
 }
 
@@ -44,19 +58,36 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-top: 60px;
+    margin-bottom: 10px;
 }
 
 #channel-setting-container .profile-image {
     border: 2px solid #954B01;
     background-color: #fff;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
 }
 
-/* 자기소개, 방송 제목, 게임 찾기, 카테고리 입력 영역 */
+#channel-setting-container .profile-upload-section .button {
+    margin-right: 20px;
+}
+
+#channel-setting-container .textarea-section {
+    display: flex;
+    flex-direction: row;
+    height: 150px;
+    margin-top: 60px;
+    margin-bottom: 10px;
+}
+
+#channel-setting-container .textarea-section .button {
+    height: 45px;
+}
+
 #channel-setting-container .large-input {
-    height: 100px; /* 더 큰 입력 필드 */
+    height: 100%;
 }
 
 /* 스트림 키 복사 영역 */
