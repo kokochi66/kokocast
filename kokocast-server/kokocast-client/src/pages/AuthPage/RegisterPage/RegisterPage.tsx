@@ -44,6 +44,11 @@ const RegisterPage = () => {
         }
     })
 
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            handleRegister();
+        }
+    };
 
     return (
         <AuthLayout title="Register">
@@ -51,16 +56,19 @@ const RegisterPage = () => {
                 title="Nickname"
                 type="text"
                 onChange={(e) => setNickname(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             <AuthInput
                 title="Password"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             <AuthInput
                 title="Password Confirm"
                 type="password"
                 onChange={(e) => setPasswordConfirm(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             <AuthButton
                 buttonName="회원가입"

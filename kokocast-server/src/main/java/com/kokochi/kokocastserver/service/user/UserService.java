@@ -4,6 +4,7 @@ import com.kokochi.kokocastserver.domain.user.*;
 import com.kokochi.kokocastserver.exception.ErrorCode;
 import com.kokochi.kokocastserver.exception.KokoException;
 import com.mongodb.MongoWriteException;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
@@ -134,9 +135,9 @@ public class UserService {
 
         // 닉네임 변경한 지 3개월 이상 지났어야 변경이 가능합니다.
 
-        LocalDateTime expiredDate = userNicknameRegistry.getModDate().plusMonths(3);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime expiredDate = userNicknameRegistry.getModDate().plusSeconds(20);
         if (now.isBefore(expiredDate)) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             throw new KokoException(ErrorCode.NICKNAME_UPDATE_RESTRICTED)
                     .addParams("expired", expiredDate.format(formatter));
         }

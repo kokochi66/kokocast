@@ -53,7 +53,7 @@ const Header: React.FC = () => {
                                 src="https://static-cdn.jtvnw.net/jtv_user_pictures/ddee2eb0-2cf3-4ae9-9766-e8099b50da79-profile_image-70x70.png"
                                 alt="Profile" className="profile-image"/>
                             <div className="dropdown-menu">
-                                <a href="#">채널 설정</a>
+                                <a href="#" onClick={() => window.location.href = '/setting/channel'}>채널 설정</a>
                                 <a href="#">프로필 설정</a>
                                 <a href="#" onClick={() => logout()}>로그아웃</a>
                             </div>

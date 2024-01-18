@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRequestHandler(csrfRequestHandler)
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers("/user/**", "/test/**"))
+                        .ignoringRequestMatchers("/**"))
                 .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests((authorize) ->
                         authorize

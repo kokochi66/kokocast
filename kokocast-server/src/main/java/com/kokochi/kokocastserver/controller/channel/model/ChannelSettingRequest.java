@@ -21,7 +21,7 @@ public class ChannelSettingRequest {
     private String streamingTitle;                      // 방송 제목
     @Size(max = 100)
     private GameCategory streamingGameCategory;         // 방송중인 게임
-    @Size(max = 10)
-    private List<@Size(max = 50) String> streamingCategory;             // 방송 카테고리
+    @Size(max = 30)
+    private String streamingCategory;             // 방송 카테고리
 
 }

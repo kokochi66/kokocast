@@ -19,14 +19,17 @@ const LoginPage = () => {
             password
         }).then(res => {
             // 로그인 처리
-            login(res.data.jwtAuthLoginToken)
-        }).catch(error => {
-            // 오류 처리
-            console.log(error);
-            // if (error.response.data) {
-            //     alert(error.response.data.message);
-            // }
-        });
+            if (res) {
+                login(res.data.jwtAuthLoginToken)
+            }
+
+        })
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            handleLogin();
+        }
     };
 
     useEffect(() => {
@@ -42,11 +45,13 @@ const LoginPage = () => {
                 title="Nickname"
                 type="text"
                 onChange={(e) => setNickname(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             <AuthInput
                 title="Password"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             <AuthButton
                 buttonName="로그인"

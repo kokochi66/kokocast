@@ -18,12 +18,32 @@ api.interceptors.request.use(
             config.headers.Authorization = `Bearer ${token}`;
         }
         config.headers["Content-Type"] = 'application/json';
-        console.log('config = ', config)
         return config;
     },
     error => {
         // 요청 에러 처리
         console.log(error)
+        return Promise.reject(error);
+    }
+);
+
+api.interceptors.response.use(
+    response => {
+        // 응답 데이터 처리 (성공 시)
+        return response;
+    },
+    error => {
+        // 응답 에러 처리
+        console.log(error);
+        if (error.response) {
+            // 서버로부터 응답을 받았지만 오류가 있는 경우
+            alert(error.response.data.message);
+            return;
+        } else {
+            // 요청 설정 중에 오류가 발생한 경우
+            alert('서버 접속에 실패하였습니다.')
+        }
+
         return Promise.reject(error);
     }
 );

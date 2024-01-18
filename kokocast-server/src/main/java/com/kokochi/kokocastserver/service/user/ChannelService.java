@@ -15,11 +15,4 @@ public class ChannelService {
 
     private final UserService userService;
 
-    public User saveChannelSetting(String userId, Channel channel) {
-        User user = userService.getUserById(userId);
-        user.setChannel(channel);
-        userService.upsertUser(user);
-        return user;
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.kokochi.kokocastserver.controller.channel.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kokochi.kokocastserver.domain.gameCategory.GameCategory;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ChannelSettingResponse {
 
     private String nickname;                            // 닉네임
