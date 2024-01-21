@@ -5,6 +5,7 @@
 **/application-secret.yml
 **/out/
 
+**/uploads/
 **/elasticsearch/
 /target/
 !.mvn/wrapper/maven-wrapper.jar

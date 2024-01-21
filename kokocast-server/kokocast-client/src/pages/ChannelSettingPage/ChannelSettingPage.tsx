@@ -13,6 +13,7 @@ const ChannelSettingPage: React.FC = () => {
     const [categories, setCategories] = useState<String[]>([]);
     const [streamKey, setStreamKey] = useState<string>('테스트 스트림 키');
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [profileImageUrl, setProfileImageUrl] = useState<string>('');
 
     useEffect(() => {
         api.get('/api/channel/setting')
@@ -22,6 +23,7 @@ const ChannelSettingPage: React.FC = () => {
                     setChannelDesc(res.data.channelDescription);
                     setChannelTitle(res.data.streamingTitle);
                     setStreamKey(res.data.streamKey);
+                    setProfileImageUrl(res.data.profileImageUrl);
                 }
             });
     }, []);
@@ -81,12 +83,20 @@ const ChannelSettingPage: React.FC = () => {
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onload = (e: ProgressEvent<FileReader>) => {
-                setSelectedImage(e.target?.result as string);
-            };
+            const formData = new FormData();
+            formData.append('imageFile', file);
 
-            reader.readAsDataURL(file);
+            api.post('/api/channel/profile-image', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(res => {
+                if (res) {
+                    console.log(res);
+                    alert('프로필 이미지가 변경되었습니다.')
+                    setProfileImageUrl(res.data.profileImageUrl);
+                }
+            })
         }
     };
 
@@ -121,8 +131,8 @@ const ChannelSettingPage: React.FC = () => {
 
                 <div className="profile-upload-section">
                     <div className="profile-image">
-                        {selectedImage ? (
-                            <img src={selectedImage} alt="Profile" className="profile-image-image" />
+                        {profileImageUrl ? (
+                            <img src={profileImageUrl} className="profile-image-image" />
                         ) : (
                             <div className="placeholder">프로필 이미지</div>
                         )}

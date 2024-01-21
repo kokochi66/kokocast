@@ -4,15 +4,20 @@ import com.kokochi.kokocastserver.controller.channel.model.ChannelSettingRequest
 import com.kokochi.kokocastserver.controller.channel.model.ChannelSettingResponse;
 import com.kokochi.kokocastserver.controller.user.model.UserAuthResponse;
 import com.kokochi.kokocastserver.domain.user.*;
+import com.kokochi.kokocastserver.exception.ErrorCode;
+import com.kokochi.kokocastserver.exception.KokoException;
+import com.kokochi.kokocastserver.service.file.FileService;
 import com.kokochi.kokocastserver.service.user.ChannelService;
 import com.kokochi.kokocastserver.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +29,7 @@ import java.util.UUID;
 public class ChannelController {
 
     private final UserService userService;
+    private final FileService fileService;
 
     @Value("${kokocast.properties.real-time-server-url")
     private String rtmpServerUrl;
@@ -178,12 +184,64 @@ public class ChannelController {
                         .build());
     }
 
+    // 프로필 이미지 업로드
+    @PostMapping(value = "/profile-image")
+    public ResponseEntity<ChannelSettingResponse> uploadProfileImage(
+            Authentication auth,
+            @RequestParam("imageFile")MultipartFile imageFile
+            ) {
+        // 파일 용량 검증 (10MB 이하)
+        if (imageFile.getSize() > 10_000_000) {
+            throw new KokoException(ErrorCode.OVER_MAX_FILE_SIZE)
+                    .addParams("fileSize", Long.toString(imageFile.getSize()));
+        }
+
+        // 파일 형식 검증 (JPEG, PNG)
+        String contentType = imageFile.getContentType();
+        if (!"image/jpeg".equals(contentType) && !"image/png".equals(contentType) && !"image/gif".equals(contentType)) {
+            throw new KokoException(ErrorCode.INVALID_FILE_CONTENT_TYPE)
+                    .addParams("contentType", contentType);
+        }
+
+
+        UserDetailsKokochi userDetails = (UserDetailsKokochi) auth.getPrincipal();
+        User user = userService.getUserById(userDetails.getUsername());
+
+        String filename = fileService.store(imageFile);
+        user.setProfileImgUrl(filename);
+        userService.upsertUser(user);
+        return ResponseEntity
+                .status(200)
+                .body(ChannelSettingResponse.builder()
+                        .profileImageUrl(user.getProfileImgUrl())
+                        .build());
+    }
+
+    // 프로필 이미지 삭제
+    @DeleteMapping(value = "/profile-image", consumes = {"multipart/form-data"})
+    public ResponseEntity<ChannelSettingResponse> deleteProfileImage(
+            Authentication auth,
+            @RequestBody ChannelSettingRequest request
+    ) {
+        UserDetailsKokochi userDetails = (UserDetailsKokochi) auth.getPrincipal();
+        User user = userService.getUserById(userDetails.getUsername());
+        user.getChannel().setChannelStreamKey(UUID.randomUUID().toString());
+        userService.upsertUser(user);
+
+        return ResponseEntity
+                .status(200)
+                .body(ChannelSettingResponse.builder()
+                        .streamingCategory(user.getChannel().getStreamingCategory())
+                        .build());
+    }
+
     private ChannelSettingResponse generateResponse(
             User user,
             UserNicknameRegistry userNicknameRegistry
     ) {
         return ChannelSettingResponse.builder()
                 .nickname(user.getNickname())
+                .profileImageUrl(user.getProfileImgUrl())
                 .lastChangedNicknameDate(userNicknameRegistry.getModDate())
                 .channelDescription(user.getChannel().getChannelDescription())
                 .streamKey(user.getChannel().getChannelStreamKey())

@@ -16,6 +16,7 @@ import java.util.List;
 public class ChannelSettingResponse {
 
     private String nickname;                            // 닉네임
+    private String profileImageUrl;                     // 프로필 이미지 파일 Url
     private LocalDateTime lastChangedNicknameDate;      // 마지막으로 닉네임을 변경한 일자
     private String channelDescription;                  // 채널 소개
 
