@@ -16,9 +16,11 @@ import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -203,12 +205,18 @@ public class ChannelController {
                     .addParams("contentType", contentType);
         }
 
-
         UserDetailsKokochi userDetails = (UserDetailsKokochi) auth.getPrincipal();
         User user = userService.getUserById(userDetails.getUsername());
 
+
+        // 프로필 이미지는 마지막 변경으로부터 3개월 이후에 변경이 가능
+        if (user.getLastProfileImgChangedDate() != null && user.getLastProfileImgChangedDate().plusMonths(3).isAfter(LocalDateTime.now())) {
+            throw new KokoException(ErrorCode.PROFILE_IMAGE_UPDATE_RESTRICTED);
+        }
+
         String filename = fileService.store(imageFile);
         user.setProfileImgUrl(filename);
+        user.setLastProfileImgChangedDate(LocalDateTime.now());
         userService.upsertUser(user);
         return ResponseEntity
                 .status(200)

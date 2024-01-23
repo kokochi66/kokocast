@@ -20,6 +20,7 @@ public class User {
     private String nickname;
     private String password;
     private String profileImgUrl;
+    private LocalDateTime lastProfileImgChangedDate;
     private List<String> followUserIds;
     private Channel channel;
     private LocalDateTime modDate;

@@ -9,6 +9,7 @@ public enum ErrorCode {
     NOT_EQUAL_PASSWORD("USER_00003", "잘못된 비밀번호 입니다."),
     ALREADY_USED_PASSWORD("USER_00004", "기존 비밀번호와 동일한 비밀번호 입니다."),
     NICKNAME_UPDATE_RESTRICTED("USER_00005", "닉네임은 마지막 변경일자로부터 3개월 후에 변경이 가능합니다."),
+    PROFILE_IMAGE_UPDATE_RESTRICTED("USER_00006", "프로필 이미지는 마지막 변경일자로부터 3개월 후에 변경이 가능합니다."),
 
 
     ALREADY_EXISTS_CHANNEL("CHANNEL_00001", "이미 채널이 존재합니다."),

@@ -21,7 +21,7 @@ public class FileService {
 
     public FileService() {
         String rootPath = System.getProperty("user.dir");
-        rootLocation = Paths.get(rootPath, "uploads");
+        rootLocation = Paths.get(rootPath, "src", "main", "resources", "static", "uploads");
         try {
             Files.createDirectories(rootLocation);
         } catch (IOException e) {
@@ -40,7 +40,7 @@ public class FileService {
             Files.copy(file.getInputStream(), destinationFile);
 
             // 경로 구분자 변경
-            return destinationFile.toString().replace(File.separator, "/");
+            return "/uploads/" + filename;
         } catch (IOException e) {
             throw new RuntimeException("Failed to store file.", e);
         }

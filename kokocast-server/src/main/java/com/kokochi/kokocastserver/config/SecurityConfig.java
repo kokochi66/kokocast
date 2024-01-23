@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers("user/**", "test/**").permitAll()
+                                .requestMatchers("user/**", "test/**", "uploads/**").permitAll()
                                 .anyRequest().authenticated());
         return http.build();
     }

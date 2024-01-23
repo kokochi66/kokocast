@@ -15,6 +15,8 @@ const ChannelSettingPage: React.FC = () => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [profileImageUrl, setProfileImageUrl] = useState<string>('');
 
+    const baseURL = process.env.REACT_APP_API_BASE_URL || '';
+
     useEffect(() => {
         api.get('/api/channel/setting')
             .then(res => {
@@ -112,6 +114,30 @@ const ChannelSettingPage: React.FC = () => {
             });
     }
 
+    const handleChangeChannelDescription = () => {
+        api.post('/api/channel/channel-description', {
+            "channelDescription": channelDesc
+        })
+            .then(res => {
+                if (res){
+                    alert('채널 설명이 변경되었습니다.')
+                    setChannelDesc(res.data.channelDescription);
+                }
+            });
+    }
+
+    const handleChangeStreamingTitle = () => {
+        api.post('/api/channel/streaming-title', {
+            "streamingTitle": channelTitle
+        })
+            .then(res => {
+                if (res){
+                    alert('채널 제목 변경되었습니다.')
+                    setChannelTitle(res.data.streamingTitle);
+                }
+            });
+    }
+
 
     return (
         <MainLayout>
@@ -132,7 +158,7 @@ const ChannelSettingPage: React.FC = () => {
                 <div className="profile-upload-section">
                     <div className="profile-image">
                         {profileImageUrl ? (
-                            <img src={profileImageUrl} className="profile-image-image" />
+                            <img src={baseURL + profileImageUrl} className="profile-image-image" />
                         ) : (
                             <div className="placeholder">프로필 이미지</div>
                         )}
@@ -160,7 +186,7 @@ const ChannelSettingPage: React.FC = () => {
                               onChange={(e) => setChannelDesc(e.target.value)}
                     />
 
-                    <button className="button">변경</button>
+                    <button className="button" onClick={handleChangeChannelDescription}>변경</button>
                 </div>
                 <p>채널에 대한 정보를 300자 미만으로 설명하세요.</p>
 
@@ -171,7 +197,7 @@ const ChannelSettingPage: React.FC = () => {
                            value={channelTitle}
                            onChange={(e) => setChannelTitle(e.target.value)}
                     />
-                    <button className="button">변경</button>
+                    <button className="button" onClick={handleChangeStreamingTitle}>변경</button>
                 </div>
                 <p>방송에서 표시할 제목을 20자 이내로 작성하세요.</p>
 

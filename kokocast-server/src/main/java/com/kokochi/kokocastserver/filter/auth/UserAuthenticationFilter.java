@@ -36,7 +36,11 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         // "user/**" 또는 "test/**" 경로에 대한 요청인 경우 필터 로직을 건너뜁니다.
-        if (path.startsWith("/user/") || path.startsWith("/test/")) {
+        if (path.startsWith("/user/")
+                || path.startsWith("/test/")
+                || path.startsWith("/uploads/")
+                || path.startsWith("/favicon.ico")
+        ) {
             filterChain.doFilter(request, response);
             return;
         }
