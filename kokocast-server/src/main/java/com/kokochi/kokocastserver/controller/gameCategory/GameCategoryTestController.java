@@ -1,6 +1,7 @@
 package com.kokochi.kokocastserver.controller.gameCategory;
 
 import com.kokochi.kokocastserver.domain.gameCategory.GameCategory;
+import com.kokochi.kokocastserver.domain.gameCategory.GameCategoryElasticRepository;
 import com.kokochi.kokocastserver.domain.gameCategory.GameCategoryRepository;
 import com.kokochi.kokocastserver.service.gameCategory.GameCategoryService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class GameCategoryTestController {
 
     private final GameCategoryService gameCategoryService;
     private final GameCategoryRepository gameCategoryRepository;
+    private final GameCategoryElasticRepository gameCategoryElasticRepository;
 
 
     @GetMapping(value = "/insert")
@@ -35,14 +37,14 @@ public class GameCategoryTestController {
         return gameCategoryRepository.findAll();
     }
 
-    @GetMapping(value = "/search")
-    public List<GameCategory> searchGameCategory(
-            @RequestParam("search") String search,
-            @RequestParam("offset") Integer offset,
-            @RequestParam("size") Integer size
-    ) {
-        return gameCategoryService.searchByCategoryName(search, PageRequest.of(offset, size));
-    }
+//    @GetMapping(value = "/search")
+//    public List<GameCategory> searchGameCategory(
+//            @RequestParam("search") String search,
+//            @RequestParam("offset") Integer offset,
+//            @RequestParam("size") Integer size
+//    ) {
+//        return gameCategoryService.searchByCategoryName(search, PageRequest.of(offset, size));
+//    }
 
 
     @GetMapping(value = "/delete")

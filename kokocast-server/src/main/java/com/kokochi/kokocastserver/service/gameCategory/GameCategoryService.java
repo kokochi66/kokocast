@@ -38,7 +38,7 @@ public class GameCategoryService {
     @Transactional
     public GameCategory insertGameCategory(String categoryName) {
         // 영문자만 확인하는 정규 표현식
-        String regex = "^[A-Za-z]+$";
+        String regex = "^[A-Za-z\\s]+$";
         if (!categoryName.matches(regex)) {
             throw new KokoException(ErrorCode.ONLY_ENGLISH_CATEGORY_NAME)
                     .addParams("categoryName", categoryName);
@@ -60,10 +60,7 @@ public class GameCategoryService {
         return gameCategory;
     }
 
-    public List<GameCategory> searchByCategoryName(String searchTerm, Pageable pageable) {
-//        TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(searchTerm);
-        Query query = new Query();
-        query.addCriteria(Criteria.where("categoryName").regex("^" + searchTerm));
-        return mongoTemplate.find(query, GameCategory.class);
+    public List<GameCategoryElastic> searchByCategoryName(String searchTerm) {
+        return gameCategoryElasticRepository.findByCategoryName(searchTerm);
     }
 }

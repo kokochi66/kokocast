@@ -20,6 +20,9 @@ public enum ErrorCode {
 
     OVER_MAX_FILE_SIZE("FILE_00001", "파일 최대 용량을 초과하였습니다."),
     INVALID_FILE_CONTENT_TYPE("FILE_00002", "유효하지 않은 파일 형식입니다."),
+
+
+    SEARCH_TEXT_OVER_MAX_LENGTH("SEARCH_00001", "검색어 길이가 제한 수를 초과했습니다."),
     ;
     // ... 기타 에러코드
 

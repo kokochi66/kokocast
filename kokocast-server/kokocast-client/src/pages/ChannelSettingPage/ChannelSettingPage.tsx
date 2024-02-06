@@ -1,7 +1,9 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import { debounce, throttle } from 'lodash';
 import './ChannelSettingPage.css'
 import MainLayout from '../../layouts/MainLayout';
 import {api} from "../../context/Api";
+
 
 const ChannelSettingPage: React.FC = () => {
     const [nickname, setNickname] = useState<string>('');
@@ -17,6 +19,9 @@ const ChannelSettingPage: React.FC = () => {
 
     const baseURL = process.env.REACT_APP_API_BASE_URL || '';
 
+    let debouncedSearch;
+    let executeSearch;
+
     useEffect(() => {
         api.get('/api/channel/setting')
             .then(res => {
@@ -28,6 +33,7 @@ const ChannelSettingPage: React.FC = () => {
                     setProfileImageUrl(res.data.profileImageUrl);
                 }
             });
+
     }, []);
 
     const handleSearchFocus = () => {
@@ -37,6 +43,29 @@ const ChannelSettingPage: React.FC = () => {
     const handleSearchBlur = () => {
         setSearchTerm(false);
     };
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // 검색 실행 함수
+        const executeSearch = throttle((searchText) => {
+            api.get('/api/game-category/search', {
+                params: { searchText }
+            }).then(res => {
+                if (res) {
+                    console.log(res);
+                    setSearchResults(res.data.searchCategoryList.map((s: any) => s.categoryName));
+                }
+            });
+        }, 100); // 0.1초 동안 재요청 방지
+
+        // Debounce 처리를 적용한 함수
+        const debouncedSearch = debounce((searchText) => {
+            executeSearch(searchText);
+        }, 300); // 입력 후 0.3초 딜레이
+
+        // 현재 입력 값으로 검색 실행
+        debouncedSearch(e.target.value);
+
+    }
 
 
     const handleAddCategory = () => {
@@ -138,7 +167,6 @@ const ChannelSettingPage: React.FC = () => {
             });
     }
 
-
     return (
         <MainLayout>
             <div id="channel-setting-container" className="container">
@@ -207,9 +235,9 @@ const ChannelSettingPage: React.FC = () => {
                            placeholder="Playing Game"
                            onFocus={handleSearchFocus}
                            onBlur={handleSearchBlur}
+                           onChange={handleSearchChange}
 
                     />
-                    {/* 검색 결과 미리보기 추가 필요 */}
                     <button className="button">변경</button>
 
                     {searchTerm && searchResults.length > 0 && (
