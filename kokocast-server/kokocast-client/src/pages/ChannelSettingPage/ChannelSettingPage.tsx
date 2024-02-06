@@ -10,7 +10,7 @@ const ChannelSettingPage: React.FC = () => {
     const [channelDesc, setChannelDesc] = useState<string>('');
     const [channelTitle, setChannelTitle] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState<Boolean>(false);
-    const [searchResults, setSearchResults] = useState<string[]>(['검색 결과 1', '검색 결과 2', '검색 결과 3']);
+    const [searchResults, setSearchResults] = useState<any[]>([]);
     const [categoryInput, setCategoryInput] = useState<any>('');
     const [categories, setCategories] = useState<String[]>([]);
     const [streamKey, setStreamKey] = useState<string>('테스트 스트림 키');
@@ -18,9 +18,6 @@ const ChannelSettingPage: React.FC = () => {
     const [profileImageUrl, setProfileImageUrl] = useState<string>('');
 
     const baseURL = process.env.REACT_APP_API_BASE_URL || '';
-
-    let debouncedSearch;
-    let executeSearch;
 
     useEffect(() => {
         api.get('/api/channel/setting')
@@ -34,6 +31,10 @@ const ChannelSettingPage: React.FC = () => {
                 }
             });
 
+        return () => {
+            debouncedSearch.cancel();
+            executeSearch.cancel();
+        }
     }, []);
 
     const handleSearchFocus = () => {
@@ -41,37 +42,40 @@ const ChannelSettingPage: React.FC = () => {
     };
 
     const handleSearchBlur = () => {
-        setSearchTerm(false);
+        setTimeout(() => {
+            setSearchTerm(false);
+        }, 150); // 100ms 지연
+
     };
 
+    // 검색 실행 함수
+    const executeSearch = throttle((searchText) => {
+        api.get('/api/game-category/search', {
+            params: { searchText }
+        }).then(res => {
+            if (res) {
+                setSearchResults(res.data.searchCategoryList);
+            }
+        });
+    }, 1000); // 0.5초 동안 재요청 방지
+
+    // Debounce 처리를 적용한 함수
+    const debouncedSearch = debounce((searchText) => {
+        executeSearch(searchText);
+    }, 300); // 입력 후 0.1초 딜레이
+
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // 검색 실행 함수
-        const executeSearch = throttle((searchText) => {
-            api.get('/api/game-category/search', {
-                params: { searchText }
-            }).then(res => {
-                if (res) {
-                    console.log(res);
-                    setSearchResults(res.data.searchCategoryList.map((s: any) => s.categoryName));
-                }
-            });
-        }, 100); // 0.1초 동안 재요청 방지
-
-        // Debounce 처리를 적용한 함수
-        const debouncedSearch = debounce((searchText) => {
-            executeSearch(searchText);
-        }, 300); // 입력 후 0.3초 딜레이
-
         // 현재 입력 값으로 검색 실행
         debouncedSearch(e.target.value);
-
     }
 
+    const handleOnClickSearchResult = (categoryId: string) => {
+        console.log(categoryId);
+        setSearchTerm(false);
+    }
 
     const handleAddCategory = () => {
-        console.log('handleAddCategory');
         if (categoryInput) {
-            console.log('categoryinput = ' , categoryInput)
             setCategories(prev => [...prev, categoryInput]);
             setCategoryInput(''); // 입력 필드 초기화
         }
@@ -123,7 +127,6 @@ const ChannelSettingPage: React.FC = () => {
                 }
             }).then(res => {
                 if (res) {
-                    console.log(res);
                     alert('프로필 이미지가 변경되었습니다.')
                     setProfileImageUrl(res.data.profileImageUrl);
                 }
@@ -229,7 +232,7 @@ const ChannelSettingPage: React.FC = () => {
                 </div>
                 <p>방송에서 표시할 제목을 20자 이내로 작성하세요.</p>
 
-                <div className="input-section">
+                <div className="input-section" onClick={handleSearchFocus}>
                     <input type="text"
                            className="input-field"
                            placeholder="Playing Game"
@@ -243,8 +246,8 @@ const ChannelSettingPage: React.FC = () => {
                     {searchTerm && searchResults.length > 0 && (
                         <div className="search-results">
                             {searchResults.map((result, index) => (
-                                <div key={index} className="search-result-item">
-                                    {result}
+                                <div key={index} className="search-result-item" onClick={() => handleOnClickSearchResult(result.categoryId)}>
+                                    {result.categoryName}
                                 </div>
                             ))}
                         </div>
