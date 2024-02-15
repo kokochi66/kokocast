@@ -13,5 +13,5 @@ public class UserAuthResponse {
     private String nickname;
     private LocalDateTime regDate;
     private String jwtAuthLoginToken;
-
+    private String profileImageUrl;
 }

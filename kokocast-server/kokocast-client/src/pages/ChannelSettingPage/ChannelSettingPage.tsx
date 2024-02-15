@@ -3,6 +3,7 @@ import { debounce, throttle } from 'lodash';
 import './ChannelSettingPage.css'
 import MainLayout from '../../layouts/MainLayout';
 import {api} from "../../context/Api";
+import {saveProfileImageUrl} from "../../context/Auth/AuthService";
 
 
 const ChannelSettingPage: React.FC = () => {
@@ -70,7 +71,6 @@ const ChannelSettingPage: React.FC = () => {
     }
 
     const handleOnClickSearchResult = (categoryId: string) => {
-        console.log(categoryId);
         setSearchTerm(false);
     }
 
@@ -129,6 +129,7 @@ const ChannelSettingPage: React.FC = () => {
                 if (res) {
                     alert('프로필 이미지가 변경되었습니다.')
                     setProfileImageUrl(res.data.profileImageUrl);
+                    saveProfileImageUrl(res.data.profileImageUrl);
                 }
             })
         }

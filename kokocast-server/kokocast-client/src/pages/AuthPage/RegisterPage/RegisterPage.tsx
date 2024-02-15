@@ -27,7 +27,7 @@ const RegisterPage = () => {
         }).then(res => {
             // 회원가입 처리
             alert('회원가입에 성공했습니다.')
-            login(res.data.jwtAuthLoginToken)
+            login(res.data)
         }).catch(error => {
             // 오류 처리
             if (error.response.data) {

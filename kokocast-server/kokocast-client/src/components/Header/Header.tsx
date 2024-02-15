@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import './Header.css';
-import {useAuth} from "../../context/Auth/AuthContext"; // 별도의 CSS 파일
+import {useAuth} from "../../context/Auth/AuthContext";
+import {getProfileImageUrl} from "../../context/Auth/AuthService"; // 별도의 CSS 파일
 
 const Header: React.FC = () => {
     const [isSearchActive, setIsSearchActive] = useState(false);
-    const { isLoggedIn, logout } = useAuth();
+    const { isLoggedIn, profileImageUrl, logout } = useAuth();
 
     const [searchPreviewItems, setSearchPreviewItems] = useState([
         '검색어 1',
@@ -50,8 +51,10 @@ const Header: React.FC = () => {
                     {isLoggedIn ? (
                         <>
                             <img
-                                src="https://static-cdn.jtvnw.net/jtv_user_pictures/ddee2eb0-2cf3-4ae9-9766-e8099b50da79-profile_image-70x70.png"
-                                alt="Profile" className="profile-image"/>
+                                src={profileImageUrl}
+                                // alt="Profile"
+                                className="profile-image"
+                            />
                             <div className="dropdown-menu">
                                 <a href="#" onClick={() => window.location.href = '/setting/channel'}>채널 설정</a>
                                 <a href="#">프로필 설정</a>

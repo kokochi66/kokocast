@@ -93,6 +93,7 @@ public class UserAuthController {
                         .nickname(user.getNickname())
                         .regDate(user.getRegDate())
                         .jwtAuthLoginToken(token)
+                        .profileImageUrl(user.getProfileImgUrl())
                         .build());
     }
 }

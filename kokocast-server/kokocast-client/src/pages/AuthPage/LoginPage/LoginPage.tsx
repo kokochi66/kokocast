@@ -20,7 +20,7 @@ const LoginPage = () => {
         }).then(res => {
             // 로그인 처리
             if (res) {
-                login(res.data.jwtAuthLoginToken)
+                login(res.data)
             }
 
         })
