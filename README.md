@@ -20,7 +20,17 @@
 
 ## 실행 방법
 
-실행에 필요한 명령어들을 정리합니다.
+### 엘라스틱 서치 서버 실행
+```shell
+.\elasticsearch\bin\elasticsearch
+```
+
+### 클라이언트 실행
+```shell
+.\kokokocast-client\npm start
+```
+
+
 
 ## 개발 체크리스트
 
