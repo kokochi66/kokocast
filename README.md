@@ -27,7 +27,8 @@
 
 ### 클라이언트 실행
 ```shell
-.\kokokocast-client\npm start
+cd ./kokocast-client
+npm start
 ```
 
 
@@ -65,3 +66,4 @@
 - [2024/01/14 :: 검색을 위한 ElasticSearch 설정 완료, User Nickname 연동](./study/plan/markdown/2401/240114.md)
 - [2024/01/15 :: 채널 설정 페이지 기본 적인 디자인과 레이아웃 구성](./study/plan/markdown/2401/240115.md)
 - [2024/01/16 :: 레이아웃 상세 디자인 추가작업](./study/plan/markdown/2401/240116.md)
+- [2024/06/13 :: 레이아웃 상세 디자인 추가작업](./study/plan/markdown/2406/240613.md)

@@ -39,10 +39,12 @@ const ChannelSettingPage: React.FC = () => {
     }, []);
 
     const handleSearchFocus = () => {
+        console.log('handleSearchFocus');
         setSearchTerm(true);
     };
 
     const handleSearchBlur = () => {
+        console.log('handleSearchBlur');
         setTimeout(() => {
             setSearchTerm(false);
         }, 150); // 100ms 지연
@@ -55,6 +57,7 @@ const ChannelSettingPage: React.FC = () => {
             params: { searchText }
         }).then(res => {
             if (res) {
+                console.log(res.data.searchCategoryList);
                 setSearchResults(res.data.searchCategoryList);
             }
         });
