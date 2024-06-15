@@ -16,6 +16,7 @@ public enum ErrorCode {
 
     ALREADY_EXISTS_CATEGORY("GAME_CATEGORY_00001", "동일한 카테고리가 이미 존재합니다."),
     ONLY_ENGLISH_CATEGORY_NAME("GAME_CATEGORY_00002", "카테고리 명은 영어만 사용이 가능합니다."),
+    NOT_EXISTS_GAME_CATEGORY("GAME_CATEGORY_00003", "존재하지 않는 카테고리 입니다."),
 
 
     OVER_MAX_FILE_SIZE("FILE_00001", "파일 최대 용량을 초과하였습니다."),

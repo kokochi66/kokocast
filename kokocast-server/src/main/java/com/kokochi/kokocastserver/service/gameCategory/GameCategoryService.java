@@ -32,17 +32,17 @@ public class GameCategoryService {
     private final MongoTemplate mongoTemplate;
 
     public Optional<GameCategory> getGameCategory(String categoryName) {
-        return gameCategoryRepository.findById(categoryName);
+        return gameCategoryRepository.findByCategoryName(categoryName);
     }
 
     @Transactional
     public GameCategory insertGameCategory(String categoryName) {
-        // 영문자만 확인하는 정규 표현식
-        String regex = "^[A-Za-z\\s]+$";
-        if (!categoryName.matches(regex)) {
-            throw new KokoException(ErrorCode.ONLY_ENGLISH_CATEGORY_NAME)
-                    .addParams("categoryName", categoryName);
-        }
+//        // 영문자 + 숫자 + 공백(스페이스) + 특수문자(',",;,:,>,< 등등) 만 확인하는 정규 표현식
+//        String regex =
+//        if (!categoryName.matches(regex)) {
+//            throw new KokoException(ErrorCode.ONLY_ENGLISH_CATEGORY_NAME)
+//                    .addParams("categoryName", categoryName);
+//        }
 
         if (getGameCategory(categoryName).isPresent()) {
             throw new KokoException(ErrorCode.ALREADY_EXISTS_CATEGORY)
@@ -61,6 +61,7 @@ public class GameCategoryService {
     }
 
     public List<GameCategoryElastic> searchByCategoryName(String searchTerm) {
-        return gameCategoryElasticRepository.findByCategoryName(searchTerm);
+        // Pageable 파라미터 추가 size 10개까지만 조회하도록
+        return gameCategoryElasticRepository.findByCategoryNameContaining(searchTerm, Pageable.ofSize(5)).getContent();
     }
 }

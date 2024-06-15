@@ -2,21 +2,18 @@ package com.kokochi.kokocastserver.controller.channel;
 
 import com.kokochi.kokocastserver.controller.channel.model.ChannelSettingRequest;
 import com.kokochi.kokocastserver.controller.channel.model.ChannelSettingResponse;
-import com.kokochi.kokocastserver.controller.user.model.UserAuthResponse;
+import com.kokochi.kokocastserver.domain.gameCategory.GameCategory;
 import com.kokochi.kokocastserver.domain.user.*;
 import com.kokochi.kokocastserver.exception.ErrorCode;
 import com.kokochi.kokocastserver.exception.KokoException;
 import com.kokochi.kokocastserver.service.file.FileService;
-import com.kokochi.kokocastserver.service.user.ChannelService;
+import com.kokochi.kokocastserver.service.gameCategory.GameCategoryService;
 import com.kokochi.kokocastserver.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.util.Pair;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +29,7 @@ public class ChannelController {
 
     private final UserService userService;
     private final FileService fileService;
+    private final GameCategoryService gameCategoryService;
 
     @Value("${kokocast.properties.real-time-server-url")
     private String rtmpServerUrl;
@@ -120,7 +118,10 @@ public class ChannelController {
     ) {
         UserDetailsKokochi userDetails = (UserDetailsKokochi) auth.getPrincipal();
         User user = userService.getUserById(userDetails.getUsername());
-        user.getChannel().setPlayingGameCategory(request.getStreamingGameCategory());
+        GameCategory gameCategoryId = gameCategoryService.getGameCategory(request.getGameCategoryName())
+                .orElseThrow(() -> new KokoException(ErrorCode.NOT_EXISTS_GAME_CATEGORY)
+                        .addParams("gameCategoryName", request.getGameCategoryName()));
+        user.getChannel().setPlayingGameCategory(gameCategoryId);
         userService.upsertUser(user);
 
         return ResponseEntity

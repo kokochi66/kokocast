@@ -9,7 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +32,7 @@ public class GameCategoryTestController {
     private final GameCategoryElasticRepository gameCategoryElasticRepository;
 
 
-    @GetMapping(value = "/insert")
+    @PutMapping(value = "")
     public Boolean insertGameCategory(
             @RequestParam("categoryName") String categoryName
     ) {
@@ -51,9 +55,15 @@ public class GameCategoryTestController {
 //    }
 
 
-    @GetMapping(value = "/delete")
-    public Boolean searchGameCategory() {
-        gameCategoryRepository.deleteAll();
+    @DeleteMapping(value = "")
+    public Boolean deleteCategoryName(@RequestParam(required = false) String categoryName) {
+        if (categoryName == null) {
+            gameCategoryRepository.deleteAll();
+            gameCategoryElasticRepository.deleteAll();
+        } else {
+            gameCategoryRepository.deleteByCategoryName(categoryName);
+            gameCategoryElasticRepository.deleteByCategoryName(categoryName);
+        }
         return true;
     }
 

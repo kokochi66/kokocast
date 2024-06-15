@@ -17,6 +17,7 @@ const ChannelSettingPage: React.FC = () => {
     const [streamKey, setStreamKey] = useState<string>('테스트 스트림 키');
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [profileImageUrl, setProfileImageUrl] = useState<string>('');
+    const [gameCategorySearchText, setGameCategorySearchText] = useState<string>('');
 
     const baseURL = process.env.REACT_APP_API_BASE_URL || '';
 
@@ -24,11 +25,17 @@ const ChannelSettingPage: React.FC = () => {
         api.get('/api/channel/setting')
             .then(res => {
                 if (res){
+                    console.log(res.data);
                     setNickname(res.data.nickname);
                     setChannelDesc(res.data.channelDescription);
                     setChannelTitle(res.data.streamingTitle);
                     setStreamKey(res.data.streamKey);
                     setProfileImageUrl(res.data.profileImageUrl);
+
+                    if (res.data.streamingGameCategory) {
+                        console.log('streamCategory set');
+                        setGameCategorySearchText(res.data.streamingGameCategory.categoryName);
+                    }
                 }
             });
 
@@ -44,15 +51,22 @@ const ChannelSettingPage: React.FC = () => {
     };
 
     const handleSearchBlur = () => {
-        console.log('handleSearchBlur');
+        // console.log('handleSearchBlur');
         setTimeout(() => {
             setSearchTerm(false);
         }, 150); // 100ms 지연
-
     };
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // 현재 입력 값으로 검색 실행
+        const searchText = e.target.value;
+        setGameCategorySearchText(searchText);
+        debouncedSearch(gameCategorySearchText);
+    }
 
     // 검색 실행 함수
     const executeSearch = throttle((searchText) => {
+        // console.log('executeSearch');
         api.get('/api/game-category/search', {
             params: { searchText }
         }).then(res => {
@@ -68,12 +82,23 @@ const ChannelSettingPage: React.FC = () => {
         executeSearch(searchText);
     }, 300); // 입력 후 0.1초 딜레이
 
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // 현재 입력 값으로 검색 실행
-        debouncedSearch(e.target.value);
+    const handleChangeGameCategory = () => {
+        api.post('/api/channel/playing-game', {
+            "gameCategoryName": gameCategorySearchText
+        })
+            .then(res => {
+                if (res){
+                    alert('게임 카테고리가 변경되었습니다.')
+                    setGameCategorySearchText(res.data.streamingGameCategory.categoryName);
+                }
+            });
     }
 
-    const handleOnClickSearchResult = (categoryId: string) => {
+
+    const handleOnClickSearchResult = (category: any) => {
+        console.log('handleOnClickSearchResult:', category);
+        // set CategorySearchText
+        setGameCategorySearchText(category['categoryName']);
         setSearchTerm(false);
     }
 
@@ -236,21 +261,22 @@ const ChannelSettingPage: React.FC = () => {
                 </div>
                 <p>방송에서 표시할 제목을 20자 이내로 작성하세요.</p>
 
-                <div className="input-section" onClick={handleSearchFocus}>
+                <div className="input-section">
                     <input type="text"
+                           id="search-input-field"
                            className="input-field"
                            placeholder="Playing Game"
                            onFocus={handleSearchFocus}
                            onBlur={handleSearchBlur}
                            onChange={handleSearchChange}
-
+                           value={gameCategorySearchText}
                     />
-                    <button className="button">변경</button>
+                    <button className="button"  onClick={handleChangeGameCategory}>변경</button>
 
                     {searchTerm && searchResults.length > 0 && (
                         <div className="search-results">
                             {searchResults.map((result, index) => (
-                                <div key={index} className="search-result-item" onClick={() => handleOnClickSearchResult(result.categoryId)}>
+                                <div key={index} className="search-result-item" onClick={() => handleOnClickSearchResult(result)}>
                                     {result.categoryName}
                                 </div>
                             ))}
