@@ -14,10 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,6 +49,7 @@ public class ChannelController {
                     .channelStreamKey(UUID.randomUUID().toString())
                     .streamingTitle("")
                     .channelDescription("")
+                    .streamingCategory(new ArrayList<>())
                     .build());
             userService.upsertUser(user);
         }
@@ -139,8 +142,12 @@ public class ChannelController {
     ) {
         UserDetailsKokochi userDetails = (UserDetailsKokochi) auth.getPrincipal();
         User user = userService.getUserById(userDetails.getUsername());
-        List<String> streamingCategory = user.getChannel().getStreamingCategory();
-        streamingCategory.add(request.getStreamingCategory());
+
+        // getStreamingCategory가 null이면 새로운 ArrayList를 생성
+        if (CollectionUtils.isEmpty(user.getChannel().getStreamingCategory())) {
+            user.getChannel().setStreamingCategory(new ArrayList<>());
+        }
+        user.getChannel().getStreamingCategory().add(request.getStreamingCategory());
         userService.upsertUser(user);
 
         return ResponseEntity

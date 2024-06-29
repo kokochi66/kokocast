@@ -31,7 +31,7 @@ const ChannelSettingPage: React.FC = () => {
                     setChannelTitle(res.data.streamingTitle);
                     setStreamKey(res.data.streamKey);
                     setProfileImageUrl(res.data.profileImageUrl);
-
+                    setCategories(res.data.streamingCategory);
                     if (res.data.streamingGameCategory) {
                         console.log('streamCategory set');
                         setGameCategorySearchText(res.data.streamingGameCategory.categoryName);
@@ -85,13 +85,12 @@ const ChannelSettingPage: React.FC = () => {
     const handleChangeGameCategory = () => {
         api.post('/api/channel/playing-game', {
             "gameCategoryName": gameCategorySearchText
-        })
-            .then(res => {
-                if (res){
-                    alert('게임 카테고리가 변경되었습니다.')
-                    setGameCategorySearchText(res.data.streamingGameCategory.categoryName);
-                }
-            });
+        }).then(res => {
+            if (res) {
+                alert('게임 카테고리가 변경되었습니다.')
+                setGameCategorySearchText(res.data.streamingGameCategory.categoryName);
+            }
+        });
     }
 
 
@@ -104,8 +103,16 @@ const ChannelSettingPage: React.FC = () => {
 
     const handleAddCategory = () => {
         if (categoryInput) {
-            setCategories(prev => [...prev, categoryInput]);
-            setCategoryInput(''); // 입력 필드 초기화
+            api.put('/api/channel/streaming-category', {
+                "streamingCategory": categoryInput
+            }).then(res => {
+                if (res) {
+                    console.log(res);
+                    setCategories(prev => [...prev, categoryInput]);
+                    setCategoryInput(''); // 입력 필드 초기화
+                }
+
+            })
         }
     };
 
@@ -116,7 +123,17 @@ const ChannelSettingPage: React.FC = () => {
     };
 
     const handleRemoveCategory = (indexToRemove: number) => {
-        setCategories(categories.filter((_, index) => index !== indexToRemove));
+
+        // delete 의 request body에 categoryInput을 넣어서 보내야함
+        api.delete('/api/channel/streaming-category', {
+            data: {
+                "streamingCategory": categories[indexToRemove]
+            }
+        }).then(res => {
+            if (res) {
+                setCategories(categories.filter((_, index) => index !== indexToRemove));
+            }
+        })
     };
 
 
@@ -204,6 +221,7 @@ const ChannelSettingPage: React.FC = () => {
             <div id="channel-setting-container" className="container">
                 <h1 className="title">Channel Setting</h1>
 
+                {/* 닉네임 */}
                 <div className="input-section nickname-section">
                     <input type="text"
                            className="input-field"
@@ -215,6 +233,7 @@ const ChannelSettingPage: React.FC = () => {
                 </div>
                 <p>닉네임은 마지막 변경으로부터 3개월 후 변경이 가능합니다.</p>
 
+                {/* 프로필 사진 */}
                 <div className="profile-upload-section">
                     <div className="profile-image">
                         {profileImageUrl ? (
@@ -239,6 +258,7 @@ const ChannelSettingPage: React.FC = () => {
                 </div>
                 <p>10MB 이내의 JPEG, PNG, GIF 형식이어야 합니다. <br/> 프로필 이미지는 마지막 변경으로부터 3개월 후 변경이 가능합니다.</p>
 
+                {/* 채널 정보 */}
                 <div className="textarea-section">
                     <textarea className="input-field large-input"
                               placeholder="Channel Description"
@@ -250,6 +270,7 @@ const ChannelSettingPage: React.FC = () => {
                 </div>
                 <p>채널에 대한 정보를 300자 미만으로 설명하세요.</p>
 
+                {/* 방송 제목 */}
                 <div className="input-section">
                     <input type="text"
                            className="input-field"
@@ -261,6 +282,7 @@ const ChannelSettingPage: React.FC = () => {
                 </div>
                 <p>방송에서 표시할 제목을 20자 이내로 작성하세요.</p>
 
+                {/* 플레이 중인 게임*/}
                 <div className="input-section">
                     <input type="text"
                            id="search-input-field"
@@ -285,6 +307,7 @@ const ChannelSettingPage: React.FC = () => {
                 </div>
                 <p>플레이 중인 게임을 선택하세요.</p>
 
+                {/* 방송 카테고리 */}
                 <div className="input-section">
                     <input type="text"
                            className="input-field"
@@ -305,6 +328,7 @@ const ChannelSettingPage: React.FC = () => {
                     ))}
                 </div>
 
+                {/* 스트림 키 */}
                 <div className="input-section">
                     <input type="password"
                            className="input-field stream-key-input"
