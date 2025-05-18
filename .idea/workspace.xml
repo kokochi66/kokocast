@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="36e74621-2294-42ec-999b-98a5c85cb704" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study/plan/checklist.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/plan/checklist.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,9 +36,9 @@
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
   </component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -77,6 +78,8 @@
       <workItem from="1702643650785" duration="497000" />
       <workItem from="1717824875033" duration="1330000" />
       <workItem from="1719680824592" duration="237000" />
+      <workItem from="1719831279221" duration="2000" />
+      <workItem from="1719935307190" duration="44000" />
     </task>
     <servers />
   </component>

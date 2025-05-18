@@ -6,6 +6,7 @@ import RegisterPage from "./pages/AuthPage/RegisterPage";
 import ChangePasswordPage from "./pages/AuthPage/ChangePasswordPage";
 import FindPasswordPage from "./pages/AuthPage/FindPasswordPage";
 import ChannelSettingPage from "./pages/ChannelSettingPage/ChannelSettingPage";
+import ViewPage from "./pages/ViewPage";
 
 export const App = () => {
   return (
@@ -14,14 +15,14 @@ export const App = () => {
               <Route path="/userlist" element={<UserList />} />
               <Route path="/main" element={<MainPage />} />
 
-
               <Route path="/auth/login" element={<LoginPage />} />
               <Route path="/auth/register" element={<RegisterPage />} />
               <Route path="/auth/find-password" element={<FindPasswordPage />} />
               <Route path="/auth/change-password" element={<ChangePasswordPage />} />
 
-
               <Route path="/setting/channel" element={<ChannelSettingPage />} />
+
+              <Route path="/view" element={<ViewPage />} />
           </Routes>
       </Router>
   );

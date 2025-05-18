@@ -60,13 +60,18 @@ const VideoArea: React.FC<VideoAreaProps> = ({title}) => {
         console.log('더보기')
     };
 
+    const handleMoveToViewPage = () => {
+        window.location.href = '/view';
+    };
+
+
     return (
         <div className="container video-area mt-3">
             <h2 className="text-left video-area-title mb-4">{title}</h2> {/* 제목 추가 */}
             <div className="row">
                 {videos.map(video => (
                     <div key={video.id} className="col-xxl-2 col-xl-4 col-sm-6 mb-3">
-                        <div className="card video-card h-100">
+                        <div className="card video-card h-100" onClick={handleMoveToViewPage}>
                             <div className="video-thumbnail">
                                 <img src={video.thumbnailImg} className="video-card-img"/>
                             </div>
